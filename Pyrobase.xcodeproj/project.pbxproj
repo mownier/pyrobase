@@ -8,9 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		B90D2CDE1EB7051500FC0ADD /* Pyrobase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B90D2CD41EB7051500FC0ADD /* Pyrobase.framework */; };
-		B90D2CE31EB7051500FC0ADD /* PyrobaseTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90D2CE21EB7051500FC0ADD /* PyrobaseTests.swift */; };
 		B90D2CE51EB7051500FC0ADD /* Pyrobase.h in Headers */ = {isa = PBXBuildFile; fileRef = B90D2CD71EB7051500FC0ADD /* Pyrobase.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		B90D2CEF1EB7054400FC0ADD /* PyroAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90D2CEE1EB7054400FC0ADD /* PyroAuth.swift */; };
+		B90D2CF51EB70EE000FC0ADD /* PyrobaseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90D2CF41EB70EE000FC0ADD /* PyrobaseTest.swift */; };
+		B90D2CF71EB70F2700FC0ADD /* Pyrobase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90D2CF61EB70F2700FC0ADD /* Pyrobase.swift */; };
+		B99651E11EB84BEA0046810D /* RequestPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99651E01EB84BEA0046810D /* RequestPath.swift */; };
+		B99651E31EB84EAB0046810D /* RequestPathTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99651E21EB84EAB0046810D /* RequestPathTest.swift */; };
+		B99651E51EB8561C0046810D /* Request.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99651E41EB8561C0046810D /* Request.swift */; };
+		B99651E71EB8573A0046810D /* RequestMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99651E61EB8573A0046810D /* RequestMock.swift */; };
+		B99651EC1EB858900046810D /* RequestTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99651EB1EB858900046810D /* RequestTest.swift */; };
+		B99651EE1EB85AF50046810D /* URLSessionMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99651ED1EB85AF50046810D /* URLSessionMock.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,9 +34,15 @@
 		B90D2CD71EB7051500FC0ADD /* Pyrobase.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Pyrobase.h; sourceTree = "<group>"; };
 		B90D2CD81EB7051500FC0ADD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B90D2CDD1EB7051500FC0ADD /* PyrobaseTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PyrobaseTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		B90D2CE21EB7051500FC0ADD /* PyrobaseTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PyrobaseTests.swift; sourceTree = "<group>"; };
 		B90D2CE41EB7051500FC0ADD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B90D2CEE1EB7054400FC0ADD /* PyroAuth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PyroAuth.swift; sourceTree = "<group>"; };
+		B90D2CF41EB70EE000FC0ADD /* PyrobaseTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PyrobaseTest.swift; sourceTree = "<group>"; };
+		B90D2CF61EB70F2700FC0ADD /* Pyrobase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pyrobase.swift; sourceTree = "<group>"; };
+		B99651E01EB84BEA0046810D /* RequestPath.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestPath.swift; sourceTree = "<group>"; };
+		B99651E21EB84EAB0046810D /* RequestPathTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestPathTest.swift; sourceTree = "<group>"; };
+		B99651E41EB8561C0046810D /* Request.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Request.swift; sourceTree = "<group>"; };
+		B99651E61EB8573A0046810D /* RequestMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestMock.swift; sourceTree = "<group>"; };
+		B99651EB1EB858900046810D /* RequestTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestTest.swift; sourceTree = "<group>"; };
+		B99651ED1EB85AF50046810D /* URLSessionMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLSessionMock.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,7 +87,9 @@
 			children = (
 				B90D2CD71EB7051500FC0ADD /* Pyrobase.h */,
 				B90D2CD81EB7051500FC0ADD /* Info.plist */,
-				B90D2CEE1EB7054400FC0ADD /* PyroAuth.swift */,
+				B90D2CF61EB70F2700FC0ADD /* Pyrobase.swift */,
+				B99651E01EB84BEA0046810D /* RequestPath.swift */,
+				B99651E41EB8561C0046810D /* Request.swift */,
 			);
 			path = Pyrobase;
 			sourceTree = "<group>";
@@ -83,10 +97,22 @@
 		B90D2CE11EB7051500FC0ADD /* PyrobaseTests */ = {
 			isa = PBXGroup;
 			children = (
-				B90D2CE21EB7051500FC0ADD /* PyrobaseTests.swift */,
 				B90D2CE41EB7051500FC0ADD /* Info.plist */,
+				B90D2CF41EB70EE000FC0ADD /* PyrobaseTest.swift */,
+				B99651E21EB84EAB0046810D /* RequestPathTest.swift */,
+				B99651EB1EB858900046810D /* RequestTest.swift */,
+				B99651E81EB857D40046810D /* Mocks */,
 			);
 			path = PyrobaseTests;
+			sourceTree = "<group>";
+		};
+		B99651E81EB857D40046810D /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				B99651E61EB8573A0046810D /* RequestMock.swift */,
+				B99651ED1EB85AF50046810D /* URLSessionMock.swift */,
+			);
+			name = Mocks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -158,6 +184,7 @@
 					B90D2CDC1EB7051500FC0ADD = {
 						CreatedOnToolsVersion = 8.0;
 						DevelopmentTeam = 4WBRGV5Z9M;
+						LastSwiftMigration = 0800;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -202,7 +229,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B90D2CEF1EB7054400FC0ADD /* PyroAuth.swift in Sources */,
+				B99651E11EB84BEA0046810D /* RequestPath.swift in Sources */,
+				B99651E51EB8561C0046810D /* Request.swift in Sources */,
+				B90D2CF71EB70F2700FC0ADD /* Pyrobase.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -210,7 +239,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B90D2CE31EB7051500FC0ADD /* PyrobaseTests.swift in Sources */,
+				B99651EE1EB85AF50046810D /* URLSessionMock.swift in Sources */,
+				B99651E31EB84EAB0046810D /* RequestPathTest.swift in Sources */,
+				B99651EC1EB858900046810D /* RequestTest.swift in Sources */,
+				B99651E71EB8573A0046810D /* RequestMock.swift in Sources */,
+				B90D2CF51EB70EE000FC0ADD /* PyrobaseTest.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -369,11 +402,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = 4WBRGV5Z9M;
 				INFOPLIST_FILE = PyrobaseTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ner.PyrobaseTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -382,6 +417,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CLANG_ENABLE_MODULES = YES;
 				DEVELOPMENT_TEAM = 4WBRGV5Z9M;
 				INFOPLIST_FILE = PyrobaseTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
@@ -410,6 +446,7 @@
 				B90D2CEA1EB7051500FC0ADD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		B90D2CEB1EB7051500FC0ADD /* Build configuration list for PBXNativeTarget "PyrobaseTests" */ = {
 			isa = XCConfigurationList;
@@ -418,6 +455,7 @@
 				B90D2CED1EB7051500FC0ADD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
