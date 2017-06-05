@@ -45,9 +45,15 @@ class PyrobaseTest: XCTestCase {
         let pyrobase = Pyrobase(baseURL: baseURL, accessToken: accessToken, requestPath: requestPath, request: request)
         
         let expectation1 = expectation(description: "testGet")
-        pyrobase.get(path: "name") { value in
-            XCTAssertTrue(value is String)
-            XCTAssertEqual(value as! String, "Luche")
+        pyrobase.get(path: "name") { result in
+            switch result {
+            case .failed:
+                XCTFail()
+            
+            case .succeded(let data):
+                XCTAssertTrue(data is String)
+                XCTAssertEqual(data as! String, "Luche")
+            }
             expectation1.fulfill()
         }
         
