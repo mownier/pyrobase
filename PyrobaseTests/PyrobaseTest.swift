@@ -50,7 +50,7 @@ class PyrobaseTest: XCTestCase {
             case .failed:
                 XCTFail()
             
-            case .succeded(let data):
+            case .succeeded(let data):
                 XCTAssertTrue(data is String)
                 XCTAssertEqual(data as! String, "Luche")
             }

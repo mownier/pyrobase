@@ -15,7 +15,7 @@ class RequestMock: RequestProtocol {
     ]
     
     func read(path: String, completion: @escaping (RequestResult) -> Void) {
-        completion(.succeded(content[path]))
+        completion(.succeeded(content[path]))
     }
     
     func write(path: String, method: RequestMethod, data: [AnyHashable : Any], completion: @escaping (RequestResult) -> Void) {

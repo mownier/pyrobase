@@ -9,7 +9,7 @@
 public enum RequestResult {
 
     case failed(Error)
-    case succeded(Any)
+    case succeeded(Any)
 }
 
 public enum RequestError: Error {

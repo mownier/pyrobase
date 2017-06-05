@@ -41,7 +41,7 @@ public class Request: RequestProtocol {
             }
             
             guard data != nil else {
-                completion(.succeded([:]))
+                completion(.succeeded([:]))
                 return
             }
             
@@ -49,7 +49,7 @@ public class Request: RequestProtocol {
             
             switch result {
             case .error(let info): completion(.failed(info))
-            case .okay(let info): completion(.succeded(info))
+            case .okay(let info): completion(.succeeded(info))
             }
         }
         task.resume()
@@ -74,7 +74,7 @@ public class Request: RequestProtocol {
             }
             
             guard data != nil else {
-                completion(.succeded([:]))
+                completion(.succeeded([:]))
                 return
             }
             
@@ -82,7 +82,7 @@ public class Request: RequestProtocol {
             
             switch result {
             case .error(let info): completion(.failed(info))
-            case .okay(let info): completion(.succeded(info))
+            case .okay(let info): completion(.succeeded(info))
             }
         }
         task.resume()

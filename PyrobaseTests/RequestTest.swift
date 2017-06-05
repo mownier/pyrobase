@@ -21,7 +21,7 @@ class RequestTest: XCTestCase {
             case .failed:
                 XCTFail()
                 
-            case .succeded(let data):
+            case .succeeded(let data):
                 XCTAssertTrue(data is String)
                 XCTAssertEqual(data as! String, "Luche")
             }
@@ -40,7 +40,7 @@ class RequestTest: XCTestCase {
             case .failed:
                 XCTFail()
                 
-            case .succeded(let data):
+            case .succeeded(let data):
                 XCTAssertTrue(data is String)
                 let number = Int(data as! String)
                 XCTAssertNotNil(number)
@@ -61,7 +61,7 @@ class RequestTest: XCTestCase {
             case .failed:
                 XCTFail()
                 
-            case .succeded(let data):
+            case .succeeded(let data):
                 XCTAssertTrue(data is String)
                 let number = Double(data as! String)
                 XCTAssertNotNil(number)
