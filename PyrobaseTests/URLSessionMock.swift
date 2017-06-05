@@ -16,7 +16,8 @@ class URLSessionMock: URLSession {
         "https://foo.firebaseio.com/users/12345/double.json?access_token=accessToken": "101.12345"
     ]
     
-    override func dataTask(with url: URL, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {
+    override func dataTask(with request: URLRequest, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {
+        let url = request.url!
         let task = URLSessionDataTaskMock(handler: completionHandler)
         task.handler = completionHandler
         task.result.data = content[url.absoluteString]?.data(using: .utf8)
