@@ -20,9 +20,9 @@ public class Pyrobase {
         self.request = request
     }
     
-    public func get(path: String, completion: @escaping (Any) -> Void) {
-        request.read(path: requestPath.build(path)) { value in
-            completion(value)
+    public func get(path: String, completion: @escaping (RequestResult) -> Void) {
+        request.read(path: requestPath.build(path)) { result in
+            completion(result)
         }
     }
     
