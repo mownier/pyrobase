@@ -15,7 +15,7 @@ class PyrobaseTest: XCTestCase {
         let baseURL = "https://foo.firebaseio.com"
         let accessToken = "accessToken"
         let requestPath = RequestPath(baseURL: baseURL, accessToken: accessToken)
-        let request = Request()
+        let request = Request.create()
         let pyrobase = Pyrobase(baseURL: baseURL, accessToken: accessToken, requestPath: requestPath, request: request)
         XCTAssertNotNil(pyrobase.baseURL)
         XCTAssertNotNil(pyrobase.accessToken)
