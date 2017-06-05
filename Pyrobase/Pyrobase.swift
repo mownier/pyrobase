@@ -27,19 +27,19 @@ public class Pyrobase {
     }
     
     public func put(path: String, value: [AnyHashable: Any], completion: @escaping (RequestResult) -> Void) {
-        request.write(path: path, method: .put, data: value) { result in
+        request.write(path: requestPath.build(path), method: .put, data: value) { result in
             completion(result)
         }
     }
     
     public func post(path: String, value: [AnyHashable: Any], completion: @escaping (RequestResult) -> Void) {
-        request.write(path: path, method: .post, data: value) { result in
+        request.write(path: requestPath.build(path), method: .post, data: value) { result in
             completion(result)
         }
     }
     
     public func patch(path: String, value: [AnyHashable: Any], completion: @escaping (RequestResult) -> Void) {
-        request.write(path: path, method: .patch, data: value) { result in
+        request.write(path: requestPath.build(path), method: .patch, data: value) { result in
             completion(result)
         }
     }
