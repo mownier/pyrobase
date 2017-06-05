@@ -16,9 +16,15 @@ class RequestTest: XCTestCase {
         let operation = JSONRequestOperation()
         let request = Request(session: session, operation: operation)
         let expectation1 = expectation(description: "testRead")
-        request.read(path: "https://foo.firebaseio.com/users/12345/name.json?access_token=accessToken") { value in
-            XCTAssertTrue(value is String)
-            XCTAssertEqual(value as! String, "Luche")
+        request.read(path: "https://foo.firebaseio.com/users/12345/name.json?access_token=accessToken") { result in
+            switch result {
+            case .failed:
+                XCTFail()
+                
+            case .succeded(let data):
+                XCTAssertTrue(data is String)
+                XCTAssertEqual(data as! String, "Luche")
+            }
             expectation1.fulfill()
         }
         waitForExpectations(timeout: 1)
@@ -29,11 +35,17 @@ class RequestTest: XCTestCase {
         let operation = JSONRequestOperation()
         let request = Request(session: session, operation: operation)
         let expectation1 = expectation(description: "testRead")
-        request.read(path: "https://foo.firebaseio.com/users/12345/int.json?access_token=accessToken") { value in
-            XCTAssertTrue(value is String)
-            let number = Int(value as! String)
-            XCTAssertNotNil(number)
-            XCTAssertEqual(number, 101)
+        request.read(path: "https://foo.firebaseio.com/users/12345/int.json?access_token=accessToken") { result in
+            switch result {
+            case .failed:
+                XCTFail()
+                
+            case .succeded(let data):
+                XCTAssertTrue(data is String)
+                let number = Int(data as! String)
+                XCTAssertNotNil(number)
+                XCTAssertEqual(number, 101)
+            }
             expectation1.fulfill()
         }
         waitForExpectations(timeout: 1)
@@ -44,11 +56,17 @@ class RequestTest: XCTestCase {
         let operation = JSONRequestOperation()
         let request = Request(session: session, operation: operation)
         let expectation1 = expectation(description: "testRead")
-        request.read(path: "https://foo.firebaseio.com/users/12345/double.json?access_token=accessToken") { value in
-            XCTAssertTrue(value is String)
-            let number = Double(value as! String)
-            XCTAssertNotNil(number)
-            XCTAssertEqual(number, 101.12345)
+        request.read(path: "https://foo.firebaseio.com/users/12345/double.json?access_token=accessToken") { result in
+            switch result {
+            case .failed:
+                XCTFail()
+                
+            case .succeded(let data):
+                XCTAssertTrue(data is String)
+                let number = Double(data as! String)
+                XCTAssertNotNil(number)
+                XCTAssertEqual(number, 101.12345)
+            }
             expectation1.fulfill()
         }
         waitForExpectations(timeout: 1)
