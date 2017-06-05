@@ -8,7 +8,7 @@
 
 public protocol RequestProtocol {
     
-    func read(path: String, completion: @escaping (Any) -> Void)
+    func read(path: String, completion: @escaping (RequestResult) -> Void)
     func write(path: String, method: RequestMethod, data: [AnyHashable: Any], completion: @escaping (RequestResult) -> Void)
 }
 
@@ -22,31 +22,34 @@ public class Request: RequestProtocol {
         self.operation = operation
     }
     
-    public func read(path: String, completion: @escaping (Any) -> Void) {
-        let url = URL(string: path)!
-        let task = session.dataTask(with: url) { data, response, error in
-            guard error == nil, data != nil else {
-                completion([AnyHashable: Any]())
+    public func read(path: String, completion: @escaping (RequestResult) -> Void) {
+        guard let url = URL(string: path) else {
+            completion(.failed(RequestError.invalidURL))
+            return
+        }
+        
+        let request = operation.build(url: url, method: .get, data: [:])
+        let task = session.dataTask(with: request) { data, response, error in
+            guard error == nil else {
+                completion(.failed(error!))
                 return
             }
             
-            let result: Any
-            
-            do {
-                if JSONSerialization.isValidJSONObject(data!) {
-                    result = try JSONSerialization.jsonObject(with: data!, options: .mutableContainers)
-                } else {
-                    result = String(data: data!, encoding: .utf8)
-                }
-            } catch {
-                completion([AnyHashable: Any]())
+            guard response != nil else {
+                completion(.failed(RequestError.noURLResponse))
                 return
             }
-   
-            if let response = response as? HTTPURLResponse, response.statusCode == 200 {
-                completion(result)
-            } else {
-                completion([AnyHashable: Any]())
+            
+            guard data != nil else {
+                completion(.succeded([:]))
+                return
+            }
+            
+            let result = self.operation.parse(data: data!)
+            
+            switch result {
+            case .error(let info): completion(.failed(info))
+            case .okay(let info): completion(.succeded(info))
             }
         }
         task.resume()
