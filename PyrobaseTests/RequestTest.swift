@@ -16,7 +16,7 @@ class RequestTest: XCTestCase {
         let operation = JSONRequestOperation.create()
         let request = Request(session: session, operation: operation)
         let expectation1 = expectation(description: "testRead")
-        request.read(path: "https://foo.firebaseio.com/users/12345/name.json?access_token=accessToken") { result in
+        request.read(path: "https://foo.firebaseio.com/users/12345/name.json?access_token=accessToken", query: [:]) { result in
             switch result {
             case .failed:
                 XCTFail()
@@ -35,7 +35,7 @@ class RequestTest: XCTestCase {
         let operation = JSONRequestOperation.create()
         let request = Request(session: session, operation: operation)
         let expectation1 = expectation(description: "testRead")
-        request.read(path: "https://foo.firebaseio.com/users/12345/int.json?access_token=accessToken") { result in
+        request.read(path: "https://foo.firebaseio.com/users/12345/int.json?access_token=accessToken", query: [:]) { result in
             switch result {
             case .failed:
                 XCTFail()
@@ -56,7 +56,7 @@ class RequestTest: XCTestCase {
         let operation = JSONRequestOperation.create()
         let request = Request(session: session, operation: operation)
         let expectation1 = expectation(description: "testRead")
-        request.read(path: "https://foo.firebaseio.com/users/12345/double.json?access_token=accessToken") { result in
+        request.read(path: "https://foo.firebaseio.com/users/12345/double.json?access_token=accessToken", query: [:]) { result in
             switch result {
             case .failed:
                 XCTFail()

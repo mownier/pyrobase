@@ -8,7 +8,7 @@
 
 public protocol RequestProtocol {
     
-    func read(path: String, completion: @escaping (RequestResult) -> Void)
+    func read(path: String, query: [AnyHashable: Any], completion: @escaping (RequestResult) -> Void)
     func write(path: String, method: RequestMethod, data: [AnyHashable: Any], completion: @escaping (RequestResult) -> Void)
 }
 
@@ -22,13 +22,13 @@ public class Request: RequestProtocol {
         self.operation = operation
     }
     
-    public func read(path: String, completion: @escaping (RequestResult) -> Void) {
+    public func read(path: String, query: [AnyHashable: Any], completion: @escaping (RequestResult) -> Void) {
         guard let url = URL(string: path) else {
             completion(.failed(RequestError.invalidURL))
             return
         }
         
-        let request = operation.build(url: url, method: .get, data: [:])
+        let request = operation.build(url: url, method: .get, data: query)
         let task = session.dataTask(with: request) { data, response, error in
             guard error == nil else {
                 completion(.failed(error!))

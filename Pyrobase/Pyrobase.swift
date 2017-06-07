@@ -16,8 +16,8 @@ public class Pyrobase {
         self.path = path
     }
     
-    public func get(path relativePath: String, completion: @escaping (RequestResult) -> Void) {
-        request.read(path: path.build(relativePath)) { result in
+    public func get(path relativePath: String, query: [AnyHashable: Any], completion: @escaping (RequestResult) -> Void) {
+        request.read(path: path.build(relativePath), query: query) { result in
             completion(result)
         }
     }

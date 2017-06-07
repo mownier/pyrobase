@@ -29,18 +29,11 @@ public class JSONRequestOperation: RequestOperation {
     public func build(url: URL, method: RequestMethod, data: [AnyHashable: Any]) -> URLRequest {
         var request = URLRequest(url: url)
         request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "\(method)"
         
-        switch method {
-        case .put, .post, .patch:
-            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-            
-            if !data.isEmpty {
-                request.httpBody = try? serialization.data(withJSONObject: data, options: [])
-            }
-            
-        default:
-            break
+        if !data.isEmpty {
+            request.httpBody = try? serialization.data(withJSONObject: data, options: [])
         }
         
         return request

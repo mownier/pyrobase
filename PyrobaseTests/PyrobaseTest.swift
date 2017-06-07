@@ -39,7 +39,7 @@ class PyrobaseTest: XCTestCase {
         let pyrobase = Pyrobase(request: request, path: path)
         
         let expectation1 = expectation(description: "testGet")
-        pyrobase.get(path: "name") { result in
+        pyrobase.get(path: "name", query: [:]) { result in
             switch result {
             case .failed:
                 XCTFail()

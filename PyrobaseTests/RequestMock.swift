@@ -14,7 +14,7 @@ class RequestMock: RequestProtocol {
         "https://foo.firebaseio.com/name.json?access_token=accessToken": "Luche"
     ]
     
-    func read(path: String, completion: @escaping (RequestResult) -> Void) {
+    func read(path: String, query: [AnyHashable: Any], completion: @escaping (RequestResult) -> Void) {
         completion(.succeeded(content[path]))
     }
     

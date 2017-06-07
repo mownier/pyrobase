@@ -17,8 +17,9 @@ class JSONRequestOperationTest: XCTestCase {
         let request = operation.build(url: url, method: .get, data: [:])
         let headers = request.allHTTPHeaderFields!
         
-        XCTAssertEqual(headers.count, 1)
+        XCTAssertEqual(headers.count, 2)
         XCTAssertEqual(headers["Accept"], "application/json")
+        XCTAssertEqual(headers["Content-Type"], "application/json")
         XCTAssertEqual(request.httpMethod, "GET")
         XCTAssertNil(request.httpBody)
     }
