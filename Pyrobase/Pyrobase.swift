@@ -8,38 +8,34 @@
 
 public class Pyrobase {
     
-    internal var accessToken: String
-    internal var requestPath: RequestPathProtocol
+    internal var path: RequestPathProtocol
     internal var request: RequestProtocol
-    internal(set) public var baseURL: String
     
-    public init(baseURL: String, accessToken: String, requestPath: RequestPathProtocol, request: RequestProtocol) {
-        self.baseURL = baseURL
-        self.accessToken = accessToken
-        self.requestPath = requestPath
+    public init(request: RequestProtocol, path: RequestPathProtocol) {
         self.request = request
+        self.path = path
     }
     
-    public func get(path: String, completion: @escaping (RequestResult) -> Void) {
-        request.read(path: requestPath.build(path)) { result in
+    public func get(path relativePath: String, completion: @escaping (RequestResult) -> Void) {
+        request.read(path: path.build(relativePath)) { result in
             completion(result)
         }
     }
     
-    public func put(path: String, value: [AnyHashable: Any], completion: @escaping (RequestResult) -> Void) {
-        request.write(path: requestPath.build(path), method: .put, data: value) { result in
+    public func put(path relativePath: String, value: [AnyHashable: Any], completion: @escaping (RequestResult) -> Void) {
+        request.write(path: path.build(relativePath), method: .put, data: value) { result in
             completion(result)
         }
     }
     
-    public func post(path: String, value: [AnyHashable: Any], completion: @escaping (RequestResult) -> Void) {
-        request.write(path: requestPath.build(path), method: .post, data: value) { result in
+    public func post(path relativePath: String, value: [AnyHashable: Any], completion: @escaping (RequestResult) -> Void) {
+        request.write(path: path.build(relativePath), method: .post, data: value) { result in
             completion(result)
         }
     }
     
-    public func patch(path: String, value: [AnyHashable: Any], completion: @escaping (RequestResult) -> Void) {
-        request.write(path: requestPath.build(path), method: .patch, data: value) { result in
+    public func patch(path relativePath: String, value: [AnyHashable: Any], completion: @escaping (RequestResult) -> Void) {
+        request.write(path: path.build(relativePath), method: .patch, data: value) { result in
             completion(result)
         }
     }
@@ -52,9 +48,9 @@ public class Pyrobase {
 extension Pyrobase {
     
     public class func create(baseURL: String, accessToken: String) -> Pyrobase {
-        let requestPath = RequestPath(baseURL: baseURL, accessToken: accessToken)
+        let path = RequestPath(baseURL: baseURL, accessToken: accessToken)
         let request = Request.create()
-        let pyrobase = Pyrobase(baseURL: baseURL, accessToken: accessToken, requestPath: requestPath, request: request)
+        let pyrobase = Pyrobase(request: request, path: path)
         return pyrobase
     }
 }

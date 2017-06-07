@@ -14,35 +14,29 @@ class PyrobaseTest: XCTestCase {
     func testInitialization() {
         let baseURL = "https://foo.firebaseio.com"
         let accessToken = "accessToken"
-        let requestPath = RequestPath(baseURL: baseURL, accessToken: accessToken)
+        let path = RequestPath(baseURL: baseURL, accessToken: accessToken)
         let request = Request.create()
-        let pyrobase = Pyrobase(baseURL: baseURL, accessToken: accessToken, requestPath: requestPath, request: request)
-        XCTAssertNotNil(pyrobase.baseURL)
-        XCTAssertNotNil(pyrobase.accessToken)
-        XCTAssertNotNil(pyrobase.requestPath)
+        let pyrobase = Pyrobase(request: request, path: path)
+        
+        XCTAssertNotNil(pyrobase.path)
         XCTAssertNotNil(pyrobase.request)
-        XCTAssertEqual(pyrobase.baseURL, baseURL)
-        XCTAssertEqual(pyrobase.accessToken, accessToken)
     }
     
     func testCreate() {
         let baseURL = "https://foo.firebaseio.com"
         let accessToken = "accessToken"
         let pyrobase = Pyrobase.create(baseURL: baseURL, accessToken: accessToken)
-        XCTAssertNotNil(pyrobase.baseURL)
-        XCTAssertNotNil(pyrobase.accessToken)
-        XCTAssertNotNil(pyrobase.requestPath)
-        XCTAssertEqual(pyrobase.baseURL, baseURL)
-        XCTAssertEqual(pyrobase.accessToken, accessToken)
-        XCTAssertTrue(pyrobase.requestPath is RequestPath)
+        
+        XCTAssertNotNil(pyrobase.path)
+        XCTAssertTrue(pyrobase.path is RequestPath)
     }
     
     func testGet() {
         let baseURL = "https://foo.firebaseio.com"
         let accessToken = "accessToken"
-        let requestPath = RequestPath(baseURL: baseURL, accessToken: accessToken)
+        let path = RequestPath(baseURL: baseURL, accessToken: accessToken)
         let request = RequestMock()
-        let pyrobase = Pyrobase(baseURL: baseURL, accessToken: accessToken, requestPath: requestPath, request: request)
+        let pyrobase = Pyrobase(request: request, path: path)
         
         let expectation1 = expectation(description: "testGet")
         pyrobase.get(path: "name") { result in
