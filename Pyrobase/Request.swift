@@ -93,7 +93,7 @@ extension Request {
     
     public class func create() -> Request {
         let session = URLSession.shared
-        let operation = JSONRequestOperation()
+        let operation = JSONRequestOperation.create()
         let request = Request(session: session, operation: operation)
         return request
     }
