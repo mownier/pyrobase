@@ -12,7 +12,7 @@ import XCTest
 class JSONRequestOperationTest: XCTestCase {
     
     func testBuildForGetMethod() {
-        let operation = JSONRequestOperation()
+        let operation = JSONRequestOperation.create()
         let url = URL(string: "https://foo.firebaseio.com/.json?accessToken=12345")!
         let request = operation.build(url: url, method: .get, data: [:])
         let headers = request.allHTTPHeaderFields!
@@ -24,7 +24,7 @@ class JSONRequestOperationTest: XCTestCase {
     }
     
     func testBuildForPostMethod() {
-        let operation = JSONRequestOperation()
+        let operation = JSONRequestOperation.create()
         let url = URL(string: "https://foo.firebaseio.com/.json?accessToken=12345")!
         var request = operation.build(url: url, method: .post, data: [:])
         let headers = request.allHTTPHeaderFields!
@@ -40,7 +40,7 @@ class JSONRequestOperationTest: XCTestCase {
     }
     
     func testBuildForPutMethod() {
-        let operation = JSONRequestOperation()
+        let operation = JSONRequestOperation.create()
         let url = URL(string: "https://foo.firebaseio.com/.json?accessToken=12345")!
         var request = operation.build(url: url, method: .put, data: [:])
         let headers = request.allHTTPHeaderFields!
@@ -56,7 +56,7 @@ class JSONRequestOperationTest: XCTestCase {
     }
     
     func testBuildForPatchMethod() {
-        let operation = JSONRequestOperation()
+        let operation = JSONRequestOperation.create()
         let url = URL(string: "https://foo.firebaseio.com/.json?accessToken=12345")!
         var request = operation.build(url: url, method: .patch, data: [:])
         let headers = request.allHTTPHeaderFields!
@@ -72,7 +72,7 @@ class JSONRequestOperationTest: XCTestCase {
     }
     
     func testParse() {
-        let operation = JSONRequestOperation()
+        let operation = JSONRequestOperation.create()
         let param: [AnyHashable: Any] = ["email": "me@me.com"]
         let data = try? JSONSerialization.data(withJSONObject: param, options: [])
         let result = operation.parse(data: data!)
@@ -88,4 +88,59 @@ class JSONRequestOperationTest: XCTestCase {
             XCTAssertEqual(param["email"] as! String, resultInfo["email"] as! String)
         }
     }
+    
+    func testParseWithValidJSONObjectButHavingNilConvertedResult() {
+        let mock = JSONSerializationMock.self
+        mock.isValid = true
+        mock.shouldThrowErrorOnJSONObjectConversion = true
+        let operation = JSONRequestOperation(serialization: mock)
+        let param: [AnyHashable: Any] = ["email": "me@me.com"]
+        let data = try? JSONSerialization.data(withJSONObject: param, options: [])
+        let result = operation.parse(data: data!)
+        
+        switch result {
+        case .okay: XCTFail()
+        case .error: break
+        }
+    }
+    
+    func testParseWithValidJSONObjectAndHavingNonNilConvertedResult() {
+        let mock = JSONSerializationMock.self
+        mock.isValid = true
+        mock.shouldThrowErrorOnJSONObjectConversion = false
+        mock.expectedJSONObject = ["message": "wee"]
+        let operation = JSONRequestOperation(serialization: mock)
+        let param: [AnyHashable: Any] = ["email": "me@me.com"]
+        let data = try? JSONSerialization.data(withJSONObject: param, options: [])
+        let result = operation.parse(data: data!)
+        
+        switch result {
+        case .error: XCTFail()
+        case .okay: break
+        }
+    }
+    
+    func testParseWithNonValidJSONObjectButNotUTF8Encoded() {
+        let operation = JSONRequestOperation.create()
+        let string = "Jeprox"
+        let data = string.data(using: .utf32)
+        let result = operation.parse(data: data!)
+        
+        switch result {
+        case .okay:
+            XCTFail()
+        
+        case .error(let info):
+            XCTAssertTrue(info is RequestError)
+            let errorInfo = info as! RequestError
+            XCTAssertTrue(errorInfo == RequestError.unparseableJSON)
+        }
+    }
+    
+    func testCreate() {
+        let operation = JSONRequestOperation.create()
+        XCTAssertTrue(operation.serialization == JSONSerialization.self)
+    }
 }
+
+
