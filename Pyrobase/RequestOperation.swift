@@ -41,19 +41,24 @@ public class JSONRequestOperation: RequestOperation {
     }
     
     public func parse(data: Data) -> RequestOperationResult {
-        do {
-            let result: Any
-            
-            if JSONSerialization.isValidJSONObject(data) {
-                result = try JSONSerialization.jsonObject(with: data, options: .mutableContainers)
-            } else {
-                result = String(data: data, encoding: .utf8)
+        if JSONSerialization.isValidJSONObject(data) {
+            guard let jsonObject = try? JSONSerialization.jsonObject(with: data, options: []) else {
+                return .error(RequestError.unparseableJSON)
             }
             
-            return .okay(result)
+            return .okay(jsonObject)
             
-        } catch {
-            return .error(RequestError.unparseableJSON)
+        } else {
+            guard let resultString = String(data: data, encoding: .utf8),
+                let resultStringData = resultString.data(using: .utf8) else {
+                return .error(RequestError.unparseableJSON)
+            }
+            
+            guard let jsonObject = try? JSONSerialization.jsonObject(with: resultStringData, options: []) else {
+                return .okay(resultString)
+            }
+            
+            return .okay(jsonObject)
         }
     }
 }
