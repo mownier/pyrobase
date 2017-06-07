@@ -20,6 +20,12 @@ public enum RequestOperationResult {
 
 public class JSONRequestOperation: RequestOperation {
     
+    internal var serialization: JSONSerialization.Type
+    
+    public init(serialization: JSONSerialization.Type) {
+        self.serialization = serialization
+    }
+    
     public func build(url: URL, method: RequestMethod, data: [AnyHashable: Any]) -> URLRequest {
         var request = URLRequest(url: url)
         request.addValue("application/json", forHTTPHeaderField: "Accept")
@@ -30,7 +36,7 @@ public class JSONRequestOperation: RequestOperation {
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
             
             if !data.isEmpty {
-                request.httpBody = try? JSONSerialization.data(withJSONObject: data, options: .prettyPrinted)
+                request.httpBody = try? serialization.data(withJSONObject: data, options: [])
             }
             
         default:
@@ -41,8 +47,8 @@ public class JSONRequestOperation: RequestOperation {
     }
     
     public func parse(data: Data) -> RequestOperationResult {
-        if JSONSerialization.isValidJSONObject(data) {
-            guard let jsonObject = try? JSONSerialization.jsonObject(with: data, options: []) else {
+        if serialization.isValidJSONObject(data) {
+            guard let jsonObject = try? serialization.jsonObject(with: data, options: []) else {
                 return .error(RequestError.unparseableJSON)
             }
             
@@ -54,10 +60,19 @@ public class JSONRequestOperation: RequestOperation {
             return .error(RequestError.unparseableJSON)
         }
         
-        guard let jsonObject = try? JSONSerialization.jsonObject(with: resultStringData, options: []) else {
+        guard let jsonObject = try? serialization.jsonObject(with: resultStringData, options: []) else {
             return .okay(resultString)
         }
         
         return .okay(jsonObject)
+    }
+}
+
+extension JSONRequestOperation {
+    
+    public class func create() -> JSONRequestOperation {
+        let serialization = JSONSerialization.self
+        let operation = JSONRequestOperation(serialization: serialization)
+        return operation
     }
 }
