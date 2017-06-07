@@ -47,18 +47,17 @@ public class JSONRequestOperation: RequestOperation {
             }
             
             return .okay(jsonObject)
-            
-        } else {
-            guard let resultString = String(data: data, encoding: .utf8),
-                let resultStringData = resultString.data(using: .utf8) else {
-                return .error(RequestError.unparseableJSON)
-            }
-            
-            guard let jsonObject = try? JSONSerialization.jsonObject(with: resultStringData, options: []) else {
-                return .okay(resultString)
-            }
-            
-            return .okay(jsonObject)
         }
+        
+        guard let resultString = String(data: data, encoding: .utf8),
+            let resultStringData = resultString.data(using: .utf8) else {
+            return .error(RequestError.unparseableJSON)
+        }
+        
+        guard let jsonObject = try? JSONSerialization.jsonObject(with: resultStringData, options: []) else {
+            return .okay(resultString)
+        }
+        
+        return .okay(jsonObject)
     }
 }
