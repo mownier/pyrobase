@@ -21,6 +21,7 @@
 		B99651E71EB8573A0046810D /* RequestMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99651E61EB8573A0046810D /* RequestMock.swift */; };
 		B99651EC1EB858900046810D /* RequestTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99651EB1EB858900046810D /* RequestTest.swift */; };
 		B99651EE1EB85AF50046810D /* URLSessionMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99651ED1EB85AF50046810D /* URLSessionMock.swift */; };
+		B9FC64AF1EE7A40800DE7CF3 /* RequestMethodTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9FC64AE1EE7A40800DE7CF3 /* RequestMethodTest.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +52,7 @@
 		B99651E61EB8573A0046810D /* RequestMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestMock.swift; sourceTree = "<group>"; };
 		B99651EB1EB858900046810D /* RequestTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestTest.swift; sourceTree = "<group>"; };
 		B99651ED1EB85AF50046810D /* URLSessionMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLSessionMock.swift; sourceTree = "<group>"; };
+		B9FC64AE1EE7A40800DE7CF3 /* RequestMethodTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestMethodTest.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +113,7 @@
 			children = (
 				B90D2CE41EB7051500FC0ADD /* Info.plist */,
 				B90D2CF41EB70EE000FC0ADD /* PyrobaseTest.swift */,
+				B9FC64AE1EE7A40800DE7CF3 /* RequestMethodTest.swift */,
 				B99651E21EB84EAB0046810D /* RequestPathTest.swift */,
 				B99651EB1EB858900046810D /* RequestTest.swift */,
 				B99651E81EB857D40046810D /* Mocks */,
@@ -255,6 +258,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B9FC64AF1EE7A40800DE7CF3 /* RequestMethodTest.swift in Sources */,
 				B99651EE1EB85AF50046810D /* URLSessionMock.swift in Sources */,
 				B99651E31EB84EAB0046810D /* RequestPathTest.swift in Sources */,
 				B99651EC1EB858900046810D /* RequestTest.swift in Sources */,
