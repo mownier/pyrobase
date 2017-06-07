@@ -13,7 +13,7 @@ class RequestTest: XCTestCase {
     
     func testRead() {
         let session = URLSessionMock()
-        let operation = JSONRequestOperation()
+        let operation = JSONRequestOperation.create()
         let request = Request(session: session, operation: operation)
         let expectation1 = expectation(description: "testRead")
         request.read(path: "https://foo.firebaseio.com/users/12345/name.json?access_token=accessToken") { result in
@@ -32,7 +32,7 @@ class RequestTest: XCTestCase {
     
     func testReadWithInt() {
         let session = URLSessionMock()
-        let operation = JSONRequestOperation()
+        let operation = JSONRequestOperation.create()
         let request = Request(session: session, operation: operation)
         let expectation1 = expectation(description: "testRead")
         request.read(path: "https://foo.firebaseio.com/users/12345/int.json?access_token=accessToken") { result in
@@ -53,7 +53,7 @@ class RequestTest: XCTestCase {
     
     func testReadWithDouble() {
         let session = URLSessionMock()
-        let operation = JSONRequestOperation()
+        let operation = JSONRequestOperation.create()
         let request = Request(session: session, operation: operation)
         let expectation1 = expectation(description: "testRead")
         request.read(path: "https://foo.firebaseio.com/users/12345/double.json?access_token=accessToken") { result in
