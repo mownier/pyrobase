@@ -23,6 +23,7 @@
 		B99651EE1EB85AF50046810D /* URLSessionMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99651ED1EB85AF50046810D /* URLSessionMock.swift */; };
 		B9FC64AF1EE7A40800DE7CF3 /* RequestMethodTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9FC64AE1EE7A40800DE7CF3 /* RequestMethodTest.swift */; };
 		B9FC64B11EE7A4DB00DE7CF3 /* JSONRequestOperationTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9FC64B01EE7A4DB00DE7CF3 /* JSONRequestOperationTest.swift */; };
+		B9FC64B31EE7CCDA00DE7CF3 /* JSONSerializationMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9FC64B21EE7CCDA00DE7CF3 /* JSONSerializationMock.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +56,7 @@
 		B99651ED1EB85AF50046810D /* URLSessionMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLSessionMock.swift; sourceTree = "<group>"; };
 		B9FC64AE1EE7A40800DE7CF3 /* RequestMethodTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestMethodTest.swift; sourceTree = "<group>"; };
 		B9FC64B01EE7A4DB00DE7CF3 /* JSONRequestOperationTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONRequestOperationTest.swift; sourceTree = "<group>"; };
+		B9FC64B21EE7CCDA00DE7CF3 /* JSONSerializationMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JSONSerializationMock.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -127,6 +129,7 @@
 		B99651E81EB857D40046810D /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
+				B9FC64B21EE7CCDA00DE7CF3 /* JSONSerializationMock.swift */,
 				B99651E61EB8573A0046810D /* RequestMock.swift */,
 				B99651ED1EB85AF50046810D /* URLSessionMock.swift */,
 			);
@@ -261,6 +264,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B9FC64B31EE7CCDA00DE7CF3 /* JSONSerializationMock.swift in Sources */,
 				B9FC64AF1EE7A40800DE7CF3 /* RequestMethodTest.swift in Sources */,
 				B9FC64B11EE7A4DB00DE7CF3 /* JSONRequestOperationTest.swift in Sources */,
 				B99651EE1EB85AF50046810D /* URLSessionMock.swift in Sources */,
