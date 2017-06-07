@@ -28,7 +28,10 @@ public class JSONRequestOperation: RequestOperation {
         switch method {
         case .put, .post, .patch:
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-            request.httpBody = try? JSONSerialization.data(withJSONObject: data, options: .prettyPrinted)
+            
+            if !data.isEmpty {
+                request.httpBody = try? JSONSerialization.data(withJSONObject: data, options: .prettyPrinted)
+            }
             
         default:
             break
