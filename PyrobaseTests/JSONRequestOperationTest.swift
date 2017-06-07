@@ -70,4 +70,22 @@ class JSONRequestOperationTest: XCTestCase {
         request = operation.build(url: url, method: .patch, data: ["email": "me@me.com"])
         XCTAssertNotNil(request.httpBody)
     }
+    
+    func testParse() {
+        let operation = JSONRequestOperation()
+        let param: [AnyHashable: Any] = ["email": "me@me.com"]
+        let data = try? JSONSerialization.data(withJSONObject: param, options: [])
+        let result = operation.parse(data: data!)
+
+        switch result {
+        case .error:
+            XCTFail()
+        
+        case .okay(let info):
+            XCTAssertTrue(info is [AnyHashable: Any])
+            let resultInfo = info as! [AnyHashable: Any]
+            XCTAssertEqual(resultInfo.count, 1)
+            XCTAssertEqual(param["email"] as! String, resultInfo["email"] as! String)
+        }
+    }
 }
