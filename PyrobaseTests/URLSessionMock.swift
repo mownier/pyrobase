@@ -16,18 +16,32 @@ class URLSessionMock: URLSession {
         "https://foo.firebaseio.com/users/12345/double.json?access_token=accessToken": "101.12345"
     ]
     
+    var expectedDataTaskResult: URLSessionDataTaskMock.Result?
+    
     override func dataTask(with request: URLRequest, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {
         let url = request.url!
         let task = URLSessionDataTaskMock(handler: completionHandler)
         task.handler = completionHandler
-        task.result.data = content[url.absoluteString]?.data(using: .utf8)
-        task.result.response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)
-        task.result.error = nil
+        
+        if expectedDataTaskResult != nil {
+            task.result = expectedDataTaskResult!
+            
+        } else {
+            task.result.data = content[url.absoluteString]?.data(using: .utf8)
+            task.result.response = HTTPURLResponse(url: url, statusCode: 200, httpVersion: nil, headerFields: nil)
+            task.result.error = nil
+        }
+
         return task
     }
 }
 
 class URLSessionDataTaskMock: URLSessionDataTask {
+    
+    enum TaskMockError: Error {
+        
+        case mockError1
+    }
     
     class Result {
         
