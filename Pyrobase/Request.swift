@@ -23,39 +23,14 @@ public class Request: RequestProtocol {
     }
     
     public func read(path: String, query: [AnyHashable: Any], completion: @escaping (RequestResult) -> Void) {
-        guard let url = URL(string: path) else {
-            completion(.failed(RequestError.invalidURL))
-            return
-        }
-        
-        let request = operation.build(url: url, method: .get, data: query)
-        let task = session.dataTask(with: request) { data, response, error in
-            guard error == nil else {
-                completion(.failed(error!))
-                return
-            }
-            
-            guard response != nil else {
-                completion(.failed(RequestError.noURLResponse))
-                return
-            }
-            
-            guard data != nil else {
-                completion(.succeeded([:]))
-                return
-            }
-            
-            let result = self.operation.parse(data: data!)
-            
-            switch result {
-            case .error(let info): completion(.failed(info))
-            case .okay(let info): completion(.succeeded(info))
-            }
-        }
-        task.resume()
+        request(path, .get, query, completion)
     }
     
     public func write(path: String, method: RequestMethod, data: [AnyHashable: Any], completion: @escaping (RequestResult) -> Void) {
+        request(path, method, data, completion)
+    }
+    
+    internal func request(_ path: String, _ method: RequestMethod, _ data: [AnyHashable: Any], _ completion: @escaping (RequestResult) -> Void) {
         guard let url = URL(string: path) else {
             completion(.failed(RequestError.invalidURL))
             return
