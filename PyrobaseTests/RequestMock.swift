@@ -10,8 +10,9 @@ import Pyrobase
 
 class RequestMock: RequestProtocol {
 
-    var content = [
-        "https://foo.firebaseio.com/name.json?access_token=accessToken": "Luche"
+    var content: [AnyHashable: Any] = [
+        "https://foo.firebaseio.com/name.json?access_token=accessToken": "Luche",
+        "https://foo.firebaseio.com/messages/abcde12345qwert.json?access_token=accessToken": ["message": "Hello World!"]
     ]
     
     func read(path: String, query: [AnyHashable: Any], completion: @escaping (RequestResult) -> Void) {
@@ -19,5 +20,26 @@ class RequestMock: RequestProtocol {
     }
     
     func write(path: String, method: RequestMethod, data: [AnyHashable : Any], completion: @escaping (RequestResult) -> Void) {
+        switch method {
+        case .put:
+            content[path] = data
+            completion(.succeeded(data))
+        
+        case .post:
+            let newId = "abcde12345qwert"
+            content[newId] = data
+            completion(.succeeded(["name": newId]))
+        
+        case .patch:
+            var contentInfo = content[path] as! [AnyHashable: Any]
+            for (key, value) in data {
+                contentInfo[key] = value
+            }
+            content[path] = contentInfo
+            completion(.succeeded(data))
+        
+        default:
+            break
+        }
     }
 }
