@@ -11,7 +11,7 @@
 		B90D2CE51EB7051500FC0ADD /* Pyrobase.h in Headers */ = {isa = PBXBuildFile; fileRef = B90D2CD71EB7051500FC0ADD /* Pyrobase.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		B90D2CF51EB70EE000FC0ADD /* PyrobaseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90D2CF41EB70EE000FC0ADD /* PyrobaseTest.swift */; };
 		B90D2CF71EB70F2700FC0ADD /* Pyrobase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90D2CF61EB70F2700FC0ADD /* Pyrobase.swift */; };
-		B939D1461EE53BB900CFDA98 /* Authentication.swift in Sources */ = {isa = PBXBuildFile; fileRef = B939D1451EE53BB900CFDA98 /* Authentication.swift */; };
+		B939D1461EE53BB900CFDA98 /* PyroAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = B939D1451EE53BB900CFDA98 /* PyroAuth.swift */; };
 		B994612B1EE518DD00EDBDFF /* RequestMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = B994612A1EE518DD00EDBDFF /* RequestMethod.swift */; };
 		B994612D1EE519C400EDBDFF /* RequestResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B994612C1EE519C400EDBDFF /* RequestResult.swift */; };
 		B994612F1EE51FFE00EDBDFF /* RequestOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B994612E1EE51FFE00EDBDFF /* RequestOperation.swift */; };
@@ -45,7 +45,7 @@
 		B90D2CE41EB7051500FC0ADD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B90D2CF41EB70EE000FC0ADD /* PyrobaseTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PyrobaseTest.swift; sourceTree = "<group>"; };
 		B90D2CF61EB70F2700FC0ADD /* Pyrobase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pyrobase.swift; sourceTree = "<group>"; };
-		B939D1451EE53BB900CFDA98 /* Authentication.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Authentication.swift; sourceTree = "<group>"; };
+		B939D1451EE53BB900CFDA98 /* PyroAuth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PyroAuth.swift; sourceTree = "<group>"; };
 		B994612A1EE518DD00EDBDFF /* RequestMethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestMethod.swift; sourceTree = "<group>"; };
 		B994612C1EE519C400EDBDFF /* RequestResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestResult.swift; sourceTree = "<group>"; };
 		B994612E1EE51FFE00EDBDFF /* RequestOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestOperation.swift; sourceTree = "<group>"; };
@@ -103,7 +103,7 @@
 			children = (
 				B90D2CD71EB7051500FC0ADD /* Pyrobase.h */,
 				B90D2CD81EB7051500FC0ADD /* Info.plist */,
-				B939D1451EE53BB900CFDA98 /* Authentication.swift */,
+				B939D1451EE53BB900CFDA98 /* PyroAuth.swift */,
 				B90D2CF61EB70F2700FC0ADD /* Pyrobase.swift */,
 				B99651E41EB8561C0046810D /* Request.swift */,
 				B994612A1EE518DD00EDBDFF /* RequestMethod.swift */,
@@ -253,7 +253,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B939D1461EE53BB900CFDA98 /* Authentication.swift in Sources */,
+				B939D1461EE53BB900CFDA98 /* PyroAuth.swift in Sources */,
 				B994612D1EE519C400EDBDFF /* RequestResult.swift in Sources */,
 				B99651E11EB84BEA0046810D /* RequestPath.swift in Sources */,
 				B99651E51EB8561C0046810D /* Request.swift in Sources */,
