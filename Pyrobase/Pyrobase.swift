@@ -11,6 +11,10 @@ public class Pyrobase {
     internal var path: RequestPathProtocol
     internal var request: RequestProtocol
     
+    public var baseURL: String {
+        return path.baseURL
+    }
+    
     public init(request: RequestProtocol, path: RequestPathProtocol) {
         self.request = request
         self.path = path
