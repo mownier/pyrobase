@@ -42,4 +42,9 @@ class RequestMock: RequestProtocol {
             break
         }
     }
+    
+    func delete(path: String, completion: @escaping (RequestResult) -> Void) {
+        content.removeValue(forKey: path)
+        completion(.succeeded("null"))
+    }
 }
