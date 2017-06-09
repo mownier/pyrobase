@@ -40,8 +40,8 @@ public class Pyrobase {
         }
     }
     
-    public func delete(path: String, completion: @escaping (Bool, Any) -> Void) {
-        
+    public func delete(path relativePath: String, completion: @escaping (RequestResult) -> Void) {
+        request.delete(path: path.build(relativePath), completion: completion)
     }
 }
 
