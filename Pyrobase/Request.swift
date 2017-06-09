@@ -61,8 +61,16 @@ public class Request: RequestProtocol {
             let result = self.operation.parse(data: data!)
             
             switch result {
-            case .error(let info): completion(.failed(info))
-            case .okay(let info): completion(.succeeded(info))
+            case .error(let info):
+                completion(.failed(info))
+                
+            case .okay(let info):
+                guard let okayInfo = info as? String, okayInfo.lowercased() == "null", method != .delete else {
+                    completion(.succeeded(info))
+                    return
+                }
+                
+                completion(.failed(RequestError.nullJSON))
             }
         }
         task.resume()
