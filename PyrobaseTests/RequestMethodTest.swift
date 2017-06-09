@@ -23,5 +23,8 @@ class RequestMethodTest: XCTestCase {
         
         method = .patch
         XCTAssertEqual("\(method)", "PATCH")
+        
+        method = .delete
+        XCTAssertEqual("\(method)", "DELETE")
     }
 }
