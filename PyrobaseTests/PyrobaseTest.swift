@@ -179,4 +179,14 @@ class PyrobaseTest: XCTestCase {
         
         waitForExpectations(timeout: 1)
     }
+    
+    func testGetBaseURL() {
+        let baseURL = "https://foo.firebaseio.com"
+        let accessToken = "accessToken"
+        let path = RequestPath(baseURL: baseURL, accessToken: accessToken)
+        let request = RequestMock()
+        let pyrobase = Pyrobase(request: request, path: path)
+        
+        XCTAssertEqual(pyrobase.baseURL, baseURL)
+    }
 }
