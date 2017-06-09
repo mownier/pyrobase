@@ -10,6 +10,7 @@ public protocol RequestProtocol {
     
     func read(path: String, query: [AnyHashable: Any], completion: @escaping (RequestResult) -> Void)
     func write(path: String, method: RequestMethod, data: [AnyHashable: Any], completion: @escaping (RequestResult) -> Void)
+    func delete(path: String, completion: @escaping (RequestResult) -> Void)
 }
 
 public class Request: RequestProtocol {
@@ -28,6 +29,10 @@ public class Request: RequestProtocol {
     
     public func write(path: String, method: RequestMethod, data: [AnyHashable: Any], completion: @escaping (RequestResult) -> Void) {
         request(path, method, data, completion)
+    }
+    
+    public func delete(path: String, completion: @escaping (RequestResult) -> Void) {
+        request(path, .delete, [:], completion)
     }
     
     internal func request(_ path: String, _ method: RequestMethod, _ data: [AnyHashable: Any], _ completion: @escaping (RequestResult) -> Void) {
