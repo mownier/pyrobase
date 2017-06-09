@@ -152,4 +152,31 @@ class PyrobaseTest: XCTestCase {
         
         waitForExpectations(timeout: 1)
     }
+    
+    func testDelete() {
+        let baseURL = "https://foo.firebaseio.com"
+        let accessToken = "accessToken"
+        let path = RequestPath(baseURL: baseURL, accessToken: accessToken)
+        let request = RequestMock()
+        let pyrobase = Pyrobase(request: request, path: path)
+        let expectation1 = expectation(description: "testDelete")
+        
+        pyrobase.delete(path: "name") { result in
+            switch result {
+            case .failed:
+                XCTFail()
+                
+            case .succeeded(let info):
+                XCTAssertTrue(info is String)
+                let resultInfo = info as! String
+                XCTAssertEqual(resultInfo.lowercased(), "null")
+                
+                let absolutePath = path.build("name")
+                XCTAssertNil(request.content[absolutePath])
+            }
+            expectation1.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1)
+    }
 }
