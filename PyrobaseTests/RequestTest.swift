@@ -308,6 +308,150 @@ class RequestTest: XCTestCase {
             expectation1.fulfill()
         }
         waitForExpectations(timeout: 1)
-
+    }
+    
+    func testDeleteWithInvalidURL() {
+        let request = Request.create()
+        let expectation1 = expectation(description: "testDelete")
+        request.delete(path: "") { result in
+            switch result {
+            case .succeeded:
+                XCTFail()
+                
+            case .failed(let error):
+                XCTAssertTrue(error is RequestError)
+                let errorInfo = error as! RequestError
+                XCTAssertTrue(errorInfo == RequestError.invalidURL)
+            }
+            expectation1.fulfill()
+        }
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testDeleteWithError() {
+        let taskResult = URLSessionDataTaskMock.Result()
+        let session = URLSessionMock()
+        let operation = JSONRequestOperation.create()
+        let request = Request(session: session, operation: operation)
+        let expectation1 = expectation(description: "testDelete")
+        
+        taskResult.error = URLSessionDataTaskMock.TaskMockError.mockError1
+        session.expectedDataTaskResult = taskResult
+        
+        request.delete(path: "https://foo.firebaseio.com/users/12345/double.json?access_token=accessToken") { result in
+            switch result {
+            case .succeeded:
+                XCTFail()
+                
+            case .failed(let error):
+                XCTAssertTrue(error is URLSessionDataTaskMock.TaskMockError)
+                let errorInfo = error as! URLSessionDataTaskMock.TaskMockError
+                XCTAssertTrue(errorInfo == URLSessionDataTaskMock.TaskMockError.mockError1)
+            }
+            expectation1.fulfill()
+        }
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testDeleteWithNoURLResponse() {
+        let taskResult = URLSessionDataTaskMock.Result()
+        let session = URLSessionMock()
+        let operation = JSONRequestOperation.create()
+        let request = Request(session: session, operation: operation)
+        let expectation1 = expectation(description: "testDelete")
+        
+        taskResult.response = nil
+        session.expectedDataTaskResult = taskResult
+        
+        request.delete(path: "https://foo.firebaseio.com/users/12345/double.json?access_token=accessToken") { result in
+            switch result {
+            case .succeeded:
+                XCTFail()
+                
+            case .failed(let error):
+                XCTAssertTrue(error is RequestError)
+                let errorInfo = error as! RequestError
+                XCTAssertTrue(errorInfo == RequestError.noURLResponse)
+            }
+            expectation1.fulfill()
+        }
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testDeleteNilData() {
+        let taskResult = URLSessionDataTaskMock.Result()
+        let session = URLSessionMock()
+        let operation = JSONRequestOperation.create()
+        let request = Request(session: session, operation: operation)
+        let expectation1 = expectation(description: "testDelete")
+        
+        taskResult.response = HTTPURLResponse()
+        session.expectedDataTaskResult = taskResult
+        
+        request.delete(path: "https://foo.firebaseio.com/users/12345/double.json?access_token=accessToken") { result in
+            switch result {
+            case .failed:
+                XCTFail()
+                
+            case .succeeded(let info):
+                XCTAssertTrue(info is [AnyHashable: Any])
+                let resultInfo = info as! [AnyHashable: Any]
+                XCTAssertTrue(resultInfo.isEmpty)
+            }
+            expectation1.fulfill()
+        }
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testDeleteWithErrorParsingData() {
+        let taskResult = URLSessionDataTaskMock.Result()
+        let session = URLSessionMock()
+        let operation = RequestOperationMock()
+        let request = Request(session: session, operation: operation)
+        let expectation1 = expectation(description: "testDelete")
+        
+        taskResult.response = HTTPURLResponse()
+        taskResult.data = Data(bytes: [1,2,3])
+        session.expectedDataTaskResult = taskResult
+        
+        request.delete(path: "https://foo.firebaseio.com/users/12345/double.json?access_token=accessToken") { result in
+            switch result {
+            case .succeeded:
+                XCTFail()
+                
+            case .failed(let info):
+                XCTAssertTrue(info is RequestOperationMock.MockError)
+                let errorInfo = info as! RequestOperationMock.MockError
+                XCTAssertTrue(errorInfo == RequestOperationMock.MockError.failedToParse)
+            }
+            expectation1.fulfill()
+        }
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testDeleteWithJSONNull() {
+        let taskResult = URLSessionDataTaskMock.Result()
+        let session = URLSessionMock()
+        let operation = JSONRequestOperation.create()
+        let request = Request(session: session, operation: operation)
+        let expectation1 = expectation(description: "testDelete")
+        
+        taskResult.response = HTTPURLResponse()
+        taskResult.data = "null".data(using: .utf8)
+        session.expectedDataTaskResult = taskResult
+        
+        request.delete(path: "https://foo.firebaseio.com/users/12345/double.json?access_token=accessToken") { result in
+            switch result {
+            case .failed:
+                XCTFail()
+                
+            case .succeeded(let info):
+                XCTAssertTrue(info is String)
+                let resultInfo = info as! String
+                XCTAssertEqual(resultInfo.lowercased(), "null")
+            }
+            expectation1.fulfill()
+        }
+        waitForExpectations(timeout: 1)
     }
 }
