@@ -12,6 +12,7 @@ public enum RequestMethod {
     case put
     case patch
     case post
+    case delete
 }
 
 extension RequestMethod: CustomStringConvertible {
@@ -22,6 +23,7 @@ extension RequestMethod: CustomStringConvertible {
         case .put: return "PUT"
         case .patch: return "PATCH"
         case .post: return "POST"
+        case .delete: return "DELETE"
         }
     }
 }
