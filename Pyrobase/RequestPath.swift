@@ -8,13 +8,16 @@
 
 public protocol RequestPathProtocol {
 
+    var baseURL: String { get }
+        
     func build(_ path: String) -> String
 }
 
 public class RequestPath: RequestPathProtocol {
     
-    internal var baseURL: String
     internal var accessToken: String
+    
+    public var baseURL: String
     
     public init(baseURL: String, accessToken: String) {
         self.baseURL = baseURL
