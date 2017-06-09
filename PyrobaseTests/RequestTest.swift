@@ -191,6 +191,32 @@ class RequestTest: XCTestCase {
         waitForExpectations(timeout: 1)
     }
     
+    func testReadWithJSONNull() {
+        let taskResult = URLSessionDataTaskMock.Result()
+        let session = URLSessionMock()
+        let operation = JSONRequestOperation.create()
+        let request = Request(session: session, operation: operation)
+        let expectation1 = expectation(description: "testRead")
+        
+        taskResult.response = HTTPURLResponse()
+        taskResult.data = "null".data(using: .utf8)
+        session.expectedDataTaskResult = taskResult
+        
+        request.read(path: "https://foo.firebaseio.com/users/12345/double.json?access_token=accessToken", query: [:]) { result in
+            switch result {
+            case .succeeded:
+                XCTFail()
+                
+            case .failed(let info):
+                XCTAssertTrue(info is RequestError)
+                let resultInfo = info as! RequestError
+                XCTAssertTrue(resultInfo == RequestError.nullJSON)
+            }
+            expectation1.fulfill()
+        }
+        waitForExpectations(timeout: 1)
+    }
+    
     func testWriteWithInvalidURL() {
         let request = Request.create()
         let expectation1 = expectation(description: "testWrite")
@@ -449,6 +475,84 @@ class RequestTest: XCTestCase {
                 XCTAssertTrue(info is String)
                 let resultInfo = info as! String
                 XCTAssertEqual(resultInfo.lowercased(), "null")
+            }
+            expectation1.fulfill()
+        }
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testWriteHavingPOSTWithJSONNull() {
+        let taskResult = URLSessionDataTaskMock.Result()
+        let session = URLSessionMock()
+        let operation = JSONRequestOperation.create()
+        let request = Request(session: session, operation: operation)
+        let expectation1 = expectation(description: "testWritePOST")
+        
+        taskResult.response = HTTPURLResponse()
+        taskResult.data = "null".data(using: .utf8)
+        session.expectedDataTaskResult = taskResult
+        
+        request.write(path: "https://foo.firebaseio.com/users/12345/double.json?access_token=accessToken", method: .post, data: [:]) { result in
+            switch result {
+            case .succeeded:
+                XCTFail()
+                
+            case .failed(let info):
+                XCTAssertTrue(info is RequestError)
+                let resultInfo = info as! RequestError
+                XCTAssertTrue(resultInfo == RequestError.nullJSON)
+            }
+            expectation1.fulfill()
+        }
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testWriteHavingPUTWithJSONNull() {
+        let taskResult = URLSessionDataTaskMock.Result()
+        let session = URLSessionMock()
+        let operation = JSONRequestOperation.create()
+        let request = Request(session: session, operation: operation)
+        let expectation1 = expectation(description: "testWritePUT")
+        
+        taskResult.response = HTTPURLResponse()
+        taskResult.data = "null".data(using: .utf8)
+        session.expectedDataTaskResult = taskResult
+        
+        request.write(path: "https://foo.firebaseio.com/users/12345/double.json?access_token=accessToken", method: .put, data: [:]) { result in
+            switch result {
+            case .succeeded:
+                XCTFail()
+                
+            case .failed(let info):
+                XCTAssertTrue(info is RequestError)
+                let resultInfo = info as! RequestError
+                XCTAssertTrue(resultInfo == RequestError.nullJSON)
+            }
+            expectation1.fulfill()
+        }
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testWriteHavingPATCHWithJSONNull() {
+        let taskResult = URLSessionDataTaskMock.Result()
+        let session = URLSessionMock()
+        let operation = JSONRequestOperation.create()
+        let request = Request(session: session, operation: operation)
+        let expectation1 = expectation(description: "testWritePATCH")
+        
+        taskResult.response = HTTPURLResponse()
+        taskResult.data = "null".data(using: .utf8)
+        session.expectedDataTaskResult = taskResult
+        
+        request.write(path: "https://foo.firebaseio.com/users/12345/double.json?access_token=accessToken", method: .patch, data: [:]) { result in
+            switch result {
+            case .succeeded:
+                XCTFail()
+                
+            case .failed(let info):
+                XCTAssertTrue(info is RequestError)
+                let resultInfo = info as! RequestError
+                XCTAssertTrue(resultInfo == RequestError.nullJSON)
             }
             expectation1.fulfill()
         }
