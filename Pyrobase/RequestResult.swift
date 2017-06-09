@@ -17,4 +17,5 @@ public enum RequestError: Error {
     case invalidURL
     case unparseableJSON
     case noURLResponse
+    case nullJSON
 }
