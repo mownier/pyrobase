@@ -34,3 +34,10 @@ public struct PyroAuthContent {
         self.expiration = ""
     }
 }
+
+extension PyroAuthContent: CustomStringConvertible {
+    
+    public var description: String {
+        return "userId: \(userId)\naccessToken: \(accessToken)\nemail: \(email)\nrefreshToken: \(refreshToken)\nexpiration: \(expiration)"
+    }
+}
