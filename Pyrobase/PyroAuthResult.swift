@@ -6,10 +6,10 @@
 //  Copyright © 2017 Ner. All rights reserved.
 //
 
-public enum PyroAuthResult {
+public enum PyroAuthResult<T> {
     
     case failed(Error)
-    case succeeded(PyroAuthContent)
+    case succeeded(T)
 }
 
 public enum PyroAuthError: Error {
@@ -32,6 +32,19 @@ public struct PyroAuthContent {
         self.email = ""
         self.refreshToken = ""
         self.expiration = ""
+    }
+}
+
+public struct PyroAuthTokenContent {
+    
+    internal(set) public var accessToken: String
+    internal(set) public var expiration: String
+    internal(set) public var refreshToken: String
+    
+    public init() {
+        self.accessToken = ""
+        self.expiration = ""
+        self.refreshToken = ""
     }
 }
 
