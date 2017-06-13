@@ -13,6 +13,8 @@
 		B90D2CF71EB70F2700FC0ADD /* Pyrobase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90D2CF61EB70F2700FC0ADD /* Pyrobase.swift */; };
 		B939D1461EE53BB900CFDA98 /* PyroAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = B939D1451EE53BB900CFDA98 /* PyroAuth.swift */; };
 		B951C2F51EEBB2C8004DA16F /* PyroAuthResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B951C2F41EEBB2C8004DA16F /* PyroAuthResult.swift */; };
+		B989FD551EEFC4CB00AF9F58 /* PyroAuthContentTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B989FD541EEFC4CB00AF9F58 /* PyroAuthContentTest.swift */; };
+		B989FD571EEFC4EC00AF9F58 /* PyroAuthTokenContentTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B989FD561EEFC4EC00AF9F58 /* PyroAuthTokenContentTest.swift */; };
 		B994612B1EE518DD00EDBDFF /* RequestMethod.swift in Sources */ = {isa = PBXBuildFile; fileRef = B994612A1EE518DD00EDBDFF /* RequestMethod.swift */; };
 		B994612D1EE519C400EDBDFF /* RequestResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B994612C1EE519C400EDBDFF /* RequestResult.swift */; };
 		B994612F1EE51FFE00EDBDFF /* RequestOperation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B994612E1EE51FFE00EDBDFF /* RequestOperation.swift */; };
@@ -58,6 +60,8 @@
 		B90D2CF61EB70F2700FC0ADD /* Pyrobase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pyrobase.swift; sourceTree = "<group>"; };
 		B939D1451EE53BB900CFDA98 /* PyroAuth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PyroAuth.swift; sourceTree = "<group>"; };
 		B951C2F41EEBB2C8004DA16F /* PyroAuthResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PyroAuthResult.swift; sourceTree = "<group>"; };
+		B989FD541EEFC4CB00AF9F58 /* PyroAuthContentTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PyroAuthContentTest.swift; sourceTree = "<group>"; };
+		B989FD561EEFC4EC00AF9F58 /* PyroAuthTokenContentTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PyroAuthTokenContentTest.swift; sourceTree = "<group>"; };
 		B994612A1EE518DD00EDBDFF /* RequestMethod.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestMethod.swift; sourceTree = "<group>"; };
 		B994612C1EE519C400EDBDFF /* RequestResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestResult.swift; sourceTree = "<group>"; };
 		B994612E1EE51FFE00EDBDFF /* RequestOperation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestOperation.swift; sourceTree = "<group>"; };
@@ -144,7 +148,9 @@
 				B90D2CE41EB7051500FC0ADD /* Info.plist */,
 				B9FC64B01EE7A4DB00DE7CF3 /* JSONRequestOperationTest.swift */,
 				B999C9451EEA71A600385AEA /* PlistReaderTest.swift */,
+				B989FD541EEFC4CB00AF9F58 /* PyroAuthContentTest.swift */,
 				B999C9501EEA836600385AEA /* PyroAuthTest.swift */,
+				B989FD561EEFC4EC00AF9F58 /* PyroAuthTokenContentTest.swift */,
 				B90D2CF41EB70EE000FC0ADD /* PyrobaseTest.swift */,
 				B9FC64AE1EE7A40800DE7CF3 /* RequestMethodTest.swift */,
 				B99651E21EB84EAB0046810D /* RequestPathTest.swift */,
@@ -314,6 +320,8 @@
 				B99651EC1EB858900046810D /* RequestTest.swift in Sources */,
 				B999C94C1EEA7B5E00385AEA /* PlistSerializationMock.swift in Sources */,
 				B999C9481EEA723000385AEA /* PlistReaderResourceMock.swift in Sources */,
+				B989FD551EEFC4CB00AF9F58 /* PyroAuthContentTest.swift in Sources */,
+				B989FD571EEFC4EC00AF9F58 /* PyroAuthTokenContentTest.swift in Sources */,
 				B99651E71EB8573A0046810D /* RequestMock.swift in Sources */,
 				B999C9541EEA8ADC00385AEA /* AuthRequestMock.swift in Sources */,
 				B90D2CF51EB70EE000FC0ADD /* PyrobaseTest.swift in Sources */,
