@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>confirmation_code_path</key>
+	<string>https://www.googleapis.com/identitytoolkit/v3/relyingparty/getOobConfirmationCode</string>
 	<key>refresh_path</key>
 	<string>https://securetoken.googleapis.com/v1/token</string>
 	<key>register_path</key>
