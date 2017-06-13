@@ -13,13 +13,15 @@ public class PyroAuth {
     internal var signInPath: String
     internal var registerPath: String
     internal var refreshPath: String
+    internal var confirmationCodePath: String
     
-    public init(key: String, request: RequestProtocol, signInPath: String, registerPath: String, refreshPath: String) {
+    public init(key: String, request: RequestProtocol, signInPath: String, registerPath: String, refreshPath: String, confirmationCodePath: String) {
         self.key = key
         self.request = request
         self.signInPath = signInPath
         self.registerPath = registerPath
         self.refreshPath = refreshPath
+        self.confirmationCodePath = confirmationCodePath
     }
     
     public func register(email: String, password: String, completion: @escaping (PyroAuthResult<PyroAuthContent>) -> Void) {
@@ -68,6 +70,20 @@ public class PyroAuth {
         }
     }
     
+    public func sendPasswordReset(email: String, completion: @escaping (PyroAuthResult<Bool>) -> Void) {
+        let data: [AnyHashable: Any] = ["requestType": "PASSWORD_RESET", "email": email]
+        let path = "\(confirmationCodePath)?key=\(key)"
+        request.write(path: path, method: .post, data: data) { result in
+            switch result {
+            case .succeeded:
+                completion(.succeeded(true))
+            
+            case .failed(let info):
+                completion(.failed(info))
+            }
+        }
+    }
+    
     internal func handleRequestResult(_ result: RequestResult, completion: @escaping (PyroAuthResult<PyroAuthContent>) -> Void) {
         switch result {
         case .succeeded(let info):
@@ -109,14 +125,16 @@ extension PyroAuth {
         var registerPath: String = ""
         var signInPath: String = ""
         var refreshPath: String = ""
+        var confirmationCodePath: String = ""
         
         if let readerInfo = reader.data as? [AnyHashable: Any] {
             registerPath = (readerInfo["register_path"] as? String) ?? ""
             signInPath = (readerInfo["sign_in_path"] as? String) ?? ""
             refreshPath = (readerInfo["refresh_path"] as? String) ?? ""
+            confirmationCodePath = (readerInfo["confirmation_code_path"] as? String) ?? ""
         }
         
-        let auth = PyroAuth(key: key, request: request, signInPath: signInPath, registerPath: registerPath, refreshPath: refreshPath)
+        let auth = PyroAuth(key: key, request: request, signInPath: signInPath, registerPath: registerPath, refreshPath: refreshPath, confirmationCodePath: confirmationCodePath)
         return auth
     }
 }
