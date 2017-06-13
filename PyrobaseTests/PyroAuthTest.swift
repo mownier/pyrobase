@@ -23,11 +23,13 @@ class PyroAuthTest: XCTestCase {
         XCTAssertEqual(auth!.registerPath, "https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser")
         XCTAssertEqual(auth!.signInPath, "https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword")
         XCTAssertEqual(auth!.refreshPath, "https://securetoken.googleapis.com/v1/token")
+        XCTAssertEqual(auth!.confirmationCodePath, "https://www.googleapis.com/identitytoolkit/v3/relyingparty/getOobConfirmationCode")
         
         auth = PyroAuth.create(key: key, bundle: bundle, plistName: "PlistReaderSample")
         XCTAssertTrue(auth!.signInPath.isEmpty)
         XCTAssertTrue(auth!.registerPath.isEmpty)
         XCTAssertTrue(auth!.refreshPath.isEmpty)
+        XCTAssertTrue(auth!.confirmationCodePath.isEmpty)
     }
     
     func testRegisterBeforeRequestIsTriggered() {
@@ -579,4 +581,99 @@ class PyroAuthTest: XCTestCase {
         
         waitForExpectations(timeout: 1)
     }
+    
+    func testSendPasswordResetBeforeRequestIsTriggered() {
+        let apiKey = "api_key"
+        let email: String = "me@me.com"
+        
+        let request = AuthRequestMock()
+        let bundle: Bundle = Bundle(for: type(of: self))
+        let auth = PyroAuth.create(key: apiKey, bundle: bundle, request: request)!
+        
+        let expectation1 = expectation(description: "testSendPasswordReset")
+        
+        auth.sendPasswordReset(email: email) { _ in
+            let expectedWriteData: [AnyHashable: Any] = [
+                "email": email,
+                "requestType": "PASSWORD_RESET"
+            ]
+            
+            let expectedWriteURLPath: String = "\(auth.confirmationCodePath)?key=\(apiKey)"
+            let expectedMethod: RequestMethod = .post
+            
+            XCTAssertEqual(expectedWriteData.count, request.writeData.count)
+            XCTAssertEqual(expectedWriteData["email"] as! String, request.writeData["email"] as! String)
+            XCTAssertEqual(expectedWriteData["requestType"] as! String, request.writeData["requestType"] as! String)
+            XCTAssertEqual(expectedWriteURLPath, request.writeURLPath)
+            XCTAssertTrue(expectedMethod == request.writeMethod)
+            
+            expectation1.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testSendPasswordResetWithNoError() {
+        let apiKey = "api_key"
+        let email = "me@me.com"
+        
+        let session = URLSessionMock()
+        let operation = JSONRequestOperation.create()
+        let request = Request(session: session, operation: operation)
+        let bundle: Bundle = Bundle(for: type(of: self))
+        let auth = PyroAuth.create(key: apiKey, bundle: bundle, request: request)!
+        
+        let taskResult = URLSessionDataTaskMock.Result()
+        let expectation1 = expectation(description: "testSendPasswordReset")
+        
+        taskResult.response = URLResponse()
+        taskResult.data = Data(bytes: [1,2,3])
+        session.expectedDataTaskResult = taskResult
+        
+        auth.sendPasswordReset(email: email) { result in
+            switch result {
+            case .failed:
+                XCTFail()
+                
+            case .succeeded(let isSuccess):
+                XCTAssertTrue(isSuccess)
+            }
+            expectation1.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testSendPasswordResetWithCustomError() {
+        let apiKey = "api_key"
+        let email = "me@me.com"
+        
+        let session = URLSessionMock()
+        let operation = JSONRequestOperation.create()
+        let request = Request(session: session, operation: operation)
+        let bundle: Bundle = Bundle(for: type(of: self))
+        let auth = PyroAuth.create(key: apiKey, bundle: bundle, request: request)!
+        
+        let taskResult = URLSessionDataTaskMock.Result()
+        let expectation1 = expectation(description: "testSendPasswordReset")
+        
+        taskResult.error = URLSessionDataTaskMock.TaskMockError.mockError1
+        session.expectedDataTaskResult = taskResult
+        
+        auth.sendPasswordReset(email: email) { result in
+            switch result {
+            case .succeeded:
+                XCTFail()
+                
+            case .failed(let info):
+                XCTAssertTrue(info is URLSessionDataTaskMock.TaskMockError)
+                let errorInfo = info as! URLSessionDataTaskMock.TaskMockError
+                XCTAssertTrue(errorInfo == URLSessionDataTaskMock.TaskMockError.mockError1)
+            }
+            expectation1.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1)
+    }
+
 }
