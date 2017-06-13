@@ -22,10 +22,12 @@ class PyroAuthTest: XCTestCase {
         XCTAssertNotNil(auth)
         XCTAssertEqual(auth!.registerPath, "https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser")
         XCTAssertEqual(auth!.signInPath, "https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword")
+        XCTAssertEqual(auth!.refreshPath, "https://securetoken.googleapis.com/v1/token")
         
         auth = PyroAuth.create(key: key, bundle: bundle, plistName: "PlistReaderSample")
         XCTAssertTrue(auth!.signInPath.isEmpty)
         XCTAssertTrue(auth!.registerPath.isEmpty)
+        XCTAssertTrue(auth!.refreshPath.isEmpty)
     }
     
     func testRegisterBeforeRequestIsTriggered() {
@@ -389,6 +391,180 @@ class PyroAuthTest: XCTestCase {
         session.expectedDataTaskResult = taskResult
         
         auth.signIn(email: email, password: password) { result in
+            switch result {
+            case .succeeded:
+                XCTFail()
+                
+            case .failed(let info):
+                XCTAssertTrue(info is URLSessionDataTaskMock.TaskMockError)
+                let errorInfo = info as! URLSessionDataTaskMock.TaskMockError
+                XCTAssertTrue(errorInfo == URLSessionDataTaskMock.TaskMockError.mockError1)
+            }
+            expectation1.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testRefreshBeforeRequestIsTriggered() {
+        let apiKey = "api_key"
+        let refreshToken: String = "refresh_token"
+        
+        let request = AuthRequestMock()
+        let bundle: Bundle = Bundle(for: type(of: self))
+        let auth = PyroAuth.create(key: apiKey, bundle: bundle, request: request)!
+        
+        let expectation1 = expectation(description: "testRefresh")
+        
+        auth.refresh(token: refreshToken) { _ in
+            let expectedWriteData: [AnyHashable: Any] = [
+                "grant_type": "refresh_token",
+                "refresh_token": refreshToken
+            ]
+            
+            let expectedWriteURLPath: String = "\(auth.refreshPath)?key=\(apiKey)"
+            let expectedMethod: RequestMethod = .post
+            
+            XCTAssertEqual(expectedWriteData.count, request.writeData.count)
+            XCTAssertEqual(expectedWriteData["grant_type"] as! String, request.writeData["grant_type"] as! String)
+            XCTAssertEqual(expectedWriteData["refresh_token"] as! String, request.writeData["refresh_token"] as! String)
+            XCTAssertEqual(expectedWriteURLPath, request.writeURLPath)
+            XCTAssertTrue(expectedMethod == request.writeMethod)
+            
+            expectation1.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testRefreshWithNoError() {
+        let apiKey = "api_key"
+        let refreshToken = "refresh_token"
+        
+        let session = URLSessionMock()
+        let operation = JSONRequestOperation.create()
+        let request = Request(session: session, operation: operation)
+        let bundle: Bundle = Bundle(for: type(of: self))
+        let auth = PyroAuth.create(key: apiKey, bundle: bundle, request: request)!
+        
+        let taskResult = URLSessionDataTaskMock.Result()
+        let expectation1 = expectation(description: "testRefresh")
+        let expectedContent = [
+            "access_token": "poiuy1820ghjfk",
+            "refresh_token": "qwert8907zxcv",
+            "expires_in": "3600"
+        ]
+        
+        taskResult.response = URLResponse()
+        taskResult.data = try? JSONSerialization.data(withJSONObject: expectedContent, options: [])
+        session.expectedDataTaskResult = taskResult
+        
+        auth.refresh(token: refreshToken) { result in
+            switch result {
+            case .failed:
+                XCTFail()
+                
+            case .succeeded(let content):
+                XCTAssertFalse(content.accessToken.isEmpty)
+                XCTAssertFalse(content.refreshToken.isEmpty)
+                XCTAssertFalse(content.expiration.isEmpty)
+                
+                XCTAssertEqual(content.accessToken, expectedContent["access_token"])
+                XCTAssertEqual(content.refreshToken, expectedContent["refresh_token"])
+                XCTAssertEqual(content.expiration, expectedContent["expires_in"])
+            }
+            expectation1.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testRefreshWithUnexpectedContentError() {
+        let apiKey = "api_key"
+        let refreshToken = "refresh_token"
+        
+        let session = URLSessionMock()
+        let operation = JSONRequestOperation.create()
+        let request = Request(session: session, operation: operation)
+        let bundle: Bundle = Bundle(for: type(of: self))
+        let auth = PyroAuth.create(key: apiKey, bundle: bundle, request: request)!
+        
+        let taskResult = URLSessionDataTaskMock.Result()
+        let expectation1 = expectation(description: "testRefresh")
+        
+        taskResult.response = URLResponse()
+        taskResult.data = "success".data(using: .utf8)
+        session.expectedDataTaskResult = taskResult
+        
+        auth.refresh(token: refreshToken) { result in
+            switch result {
+            case .succeeded:
+                XCTFail()
+                
+            case .failed(let info):
+                XCTAssertTrue(info is PyroAuthError)
+                let errorInfo = info as! PyroAuthError
+                XCTAssertTrue(errorInfo == PyroAuthError.unexpectedContent)
+            }
+            expectation1.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testRefreshWithIncompleteContentError() {
+        let apiKey = "api_key"
+        let refreshToken = "refresh_token"
+        
+        let session = URLSessionMock()
+        let operation = JSONRequestOperation.create()
+        let request = Request(session: session, operation: operation)
+        let bundle: Bundle = Bundle(for: type(of: self))
+        let auth = PyroAuth.create(key: apiKey, bundle: bundle, request: request)!
+        
+        let taskResult = URLSessionDataTaskMock.Result()
+        let expectation1 = expectation(description: "testRefresh")
+        let expectedContent = [
+            "access_token": "poiuy1820ghjfk",
+            ]
+        
+        taskResult.response = URLResponse()
+        taskResult.data = try? JSONSerialization.data(withJSONObject: expectedContent, options: [])
+        session.expectedDataTaskResult = taskResult
+        
+        auth.refresh(token: refreshToken) { result in
+            switch result {
+            case .succeeded:
+                XCTFail()
+                
+            case .failed(let info):
+                XCTAssertTrue(info is PyroAuthError)
+                let errorInfo = info as! PyroAuthError
+                XCTAssertTrue(errorInfo == PyroAuthError.incompleteContent)
+            }
+            expectation1.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testRefreshWithCustomError() {
+        let apiKey = "api_key"
+        let refreshToken = "refresh_token"
+        
+        let session = URLSessionMock()
+        let operation = JSONRequestOperation.create()
+        let request = Request(session: session, operation: operation)
+        let bundle: Bundle = Bundle(for: type(of: self))
+        let auth = PyroAuth.create(key: apiKey, bundle: bundle, request: request)!
+        
+        let taskResult = URLSessionDataTaskMock.Result()
+        let expectation1 = expectation(description: "testRefresh")
+        
+        taskResult.error = URLSessionDataTaskMock.TaskMockError.mockError1
+        session.expectedDataTaskResult = taskResult
+        
+        auth.refresh(token: refreshToken) { result in
             switch result {
             case .succeeded:
                 XCTFail()
