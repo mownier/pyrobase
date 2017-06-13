@@ -54,3 +54,10 @@ extension PyroAuthContent: CustomStringConvertible {
         return "userId: \(userId)\naccessToken: \(accessToken)\nemail: \(email)\nrefreshToken: \(refreshToken)\nexpiration: \(expiration)"
     }
 }
+
+extension PyroAuthTokenContent: CustomStringConvertible {
+    
+    public var description: String {
+        return "accessToken: \(accessToken)\nexpiration: \(expiration)\nrefreshToken: \(refreshToken)"
+    }
+}
