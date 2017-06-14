@@ -117,7 +117,11 @@ public class PyroAuth {
 
 extension PyroAuth {
     
-    public class func create(key: String, bundle: Bundle = Bundle(identifier: "com.ner.Pyrobase")!, plistName: String = "PyroAuthInfo", request: RequestProtocol = Request.create() ) -> PyroAuth? {
+    public class func create(key: String, bundleIdentifier: String = "com.ner.Pyrobase", plistName: String = "PyroAuthInfo", request: RequestProtocol = Request.create() ) -> PyroAuth? {
+        guard let bundle = Bundle(identifier: bundleIdentifier) else {
+            return nil
+        }
+        
         guard let reader = PlistReader.create(name: plistName, bundle: bundle) else {
             return nil
         }

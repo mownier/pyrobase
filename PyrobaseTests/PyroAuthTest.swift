@@ -15,7 +15,8 @@ class PyroAuthTest: XCTestCase {
         let key: String = "api_key"
         
         var bundle: Bundle = .main
-        var auth = PyroAuth.create(key: key, bundle: bundle)
+        var bundleIdentifier: String = bundle.bundleIdentifier ?? ""
+        var auth = PyroAuth.create(key: key, bundleIdentifier: bundleIdentifier)
         XCTAssertNil(auth) // This is nil because Bundle.main's path is different when testing
         
         auth = PyroAuth.create(key: key)
@@ -26,7 +27,8 @@ class PyroAuthTest: XCTestCase {
         XCTAssertEqual(auth!.confirmationCodePath, "https://www.googleapis.com/identitytoolkit/v3/relyingparty/getOobConfirmationCode")
         
         bundle = Bundle(for: type(of: self))
-        auth = PyroAuth.create(key: key, bundle: bundle, plistName: "PlistReaderSample")
+        bundleIdentifier = bundle.bundleIdentifier ?? ""
+        auth = PyroAuth.create(key: key, bundleIdentifier: bundleIdentifier, plistName: "PlistReaderSample")
         XCTAssertTrue(auth!.signInPath.isEmpty)
         XCTAssertTrue(auth!.registerPath.isEmpty)
         XCTAssertTrue(auth!.refreshPath.isEmpty)
