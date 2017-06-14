@@ -33,6 +33,12 @@ class PyroAuthTest: XCTestCase {
         XCTAssertTrue(auth!.registerPath.isEmpty)
         XCTAssertTrue(auth!.refreshPath.isEmpty)
         XCTAssertTrue(auth!.confirmationCodePath.isEmpty)
+        
+        auth = PyroAuthMock.create(key: key)
+        XCTAssertNotNil(auth)
+        XCTAssertTrue(PyroAuthMock.defaultRequest is Request)
+        XCTAssertEqual(PyroAuthMock.defaultPlistName, "PyroAuthInfo")
+        XCTAssertEqual(PyroAuthMock.defaultBundleIdentifier, "com.ner.Pyrobase")
     }
     
     func testRegisterBeforeRequestIsTriggered() {
