@@ -11,8 +11,8 @@ import Pyrobase
 class RequestMock: RequestProtocol {
 
     var content: [AnyHashable: Any] = [
-        "https://foo.firebaseio.com/name.json?access_token=accessToken": "Luche",
-        "https://foo.firebaseio.com/messages/abcde12345qwert.json?access_token=accessToken": ["message": "Hello World!"]
+        "https://foo.firebaseio.com/name.json?auth=accessToken": "Luche",
+        "https://foo.firebaseio.com/messages/abcde12345qwert.json?auth=accessToken": ["message": "Hello World!"]
     ]
     
     func read(path: String, query: [AnyHashable: Any], completion: @escaping (RequestResult) -> Void) {

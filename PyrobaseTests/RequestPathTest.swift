@@ -26,7 +26,7 @@ class RequestPathTest: XCTestCase {
         let baseURL = "https://foo.firebaseio.com"
         let relativePath = "foo"
         let requestPath = RequestPath(baseURL: baseURL, accessToken: accessToken)
-        let requestURL = "\(baseURL)/\(relativePath).json?access_token=\(accessToken)"
+        let requestURL = "\(baseURL)/\(relativePath).json?auth=\(accessToken)"
         XCTAssertEqual(requestURL, requestPath.build(relativePath))
     }
 }
