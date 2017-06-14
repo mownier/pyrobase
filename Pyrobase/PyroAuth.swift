@@ -15,6 +15,31 @@ public class PyroAuth {
     internal var refreshPath: String
     internal var confirmationCodePath: String
     
+    public class func create(key: String, bundleIdentifier: String = "com.ner.Pyrobase", plistName: String = "PyroAuthInfo", request: RequestProtocol = Request.create() ) -> PyroAuth? {
+        guard let bundle = Bundle(identifier: bundleIdentifier) else {
+            return nil
+        }
+        
+        guard let reader = PlistReader.create(name: plistName, bundle: bundle) else {
+            return nil
+        }
+        
+        var registerPath: String = ""
+        var signInPath: String = ""
+        var refreshPath: String = ""
+        var confirmationCodePath: String = ""
+        
+        if let readerInfo = reader.data as? [AnyHashable: Any] {
+            registerPath = (readerInfo["register_path"] as? String) ?? ""
+            signInPath = (readerInfo["sign_in_path"] as? String) ?? ""
+            refreshPath = (readerInfo["refresh_path"] as? String) ?? ""
+            confirmationCodePath = (readerInfo["confirmation_code_path"] as? String) ?? ""
+        }
+        
+        let auth = PyroAuth(key: key, request: request, signInPath: signInPath, registerPath: registerPath, refreshPath: refreshPath, confirmationCodePath: confirmationCodePath)
+        return auth
+    }
+    
     public init(key: String, request: RequestProtocol, signInPath: String, registerPath: String, refreshPath: String, confirmationCodePath: String) {
         self.key = key
         self.request = request
@@ -112,33 +137,5 @@ public class PyroAuth {
         case .failed(let info):
             completion(.failed(info))
         }
-    }
-}
-
-extension PyroAuth {
-    
-    public class func create(key: String, bundleIdentifier: String = "com.ner.Pyrobase", plistName: String = "PyroAuthInfo", request: RequestProtocol = Request.create() ) -> PyroAuth? {
-        guard let bundle = Bundle(identifier: bundleIdentifier) else {
-            return nil
-        }
-        
-        guard let reader = PlistReader.create(name: plistName, bundle: bundle) else {
-            return nil
-        }
-        
-        var registerPath: String = ""
-        var signInPath: String = ""
-        var refreshPath: String = ""
-        var confirmationCodePath: String = ""
-        
-        if let readerInfo = reader.data as? [AnyHashable: Any] {
-            registerPath = (readerInfo["register_path"] as? String) ?? ""
-            signInPath = (readerInfo["sign_in_path"] as? String) ?? ""
-            refreshPath = (readerInfo["refresh_path"] as? String) ?? ""
-            confirmationCodePath = (readerInfo["confirmation_code_path"] as? String) ?? ""
-        }
-        
-        let auth = PyroAuth(key: key, request: request, signInPath: signInPath, registerPath: registerPath, refreshPath: refreshPath, confirmationCodePath: confirmationCodePath)
-        return auth
     }
 }
