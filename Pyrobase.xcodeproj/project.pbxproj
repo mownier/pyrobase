@@ -12,6 +12,7 @@
 		B90D2CF51EB70EE000FC0ADD /* PyrobaseTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90D2CF41EB70EE000FC0ADD /* PyrobaseTest.swift */; };
 		B90D2CF71EB70F2700FC0ADD /* Pyrobase.swift in Sources */ = {isa = PBXBuildFile; fileRef = B90D2CF61EB70F2700FC0ADD /* Pyrobase.swift */; };
 		B939D1461EE53BB900CFDA98 /* PyroAuth.swift in Sources */ = {isa = PBXBuildFile; fileRef = B939D1451EE53BB900CFDA98 /* PyroAuth.swift */; };
+		B9448C511EF10612006A3AB0 /* PyroAuthMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9448C501EF10612006A3AB0 /* PyroAuthMock.swift */; };
 		B951C2F51EEBB2C8004DA16F /* PyroAuthResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B951C2F41EEBB2C8004DA16F /* PyroAuthResult.swift */; };
 		B989FD551EEFC4CB00AF9F58 /* PyroAuthContentTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B989FD541EEFC4CB00AF9F58 /* PyroAuthContentTest.swift */; };
 		B989FD571EEFC4EC00AF9F58 /* PyroAuthTokenContentTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B989FD561EEFC4EC00AF9F58 /* PyroAuthTokenContentTest.swift */; };
@@ -58,6 +59,7 @@
 		B90D2CF41EB70EE000FC0ADD /* PyrobaseTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PyrobaseTest.swift; sourceTree = "<group>"; };
 		B90D2CF61EB70F2700FC0ADD /* Pyrobase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Pyrobase.swift; sourceTree = "<group>"; };
 		B939D1451EE53BB900CFDA98 /* PyroAuth.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PyroAuth.swift; sourceTree = "<group>"; };
+		B9448C501EF10612006A3AB0 /* PyroAuthMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PyroAuthMock.swift; sourceTree = "<group>"; };
 		B951C2F41EEBB2C8004DA16F /* PyroAuthResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PyroAuthResult.swift; sourceTree = "<group>"; };
 		B989FD541EEFC4CB00AF9F58 /* PyroAuthContentTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PyroAuthContentTest.swift; sourceTree = "<group>"; };
 		B989FD561EEFC4EC00AF9F58 /* PyroAuthTokenContentTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PyroAuthTokenContentTest.swift; sourceTree = "<group>"; };
@@ -168,6 +170,7 @@
 				B999C9491EEA774100385AEA /* PlistReaderContentMock.swift */,
 				B999C9471EEA723000385AEA /* PlistReaderResourceMock.swift */,
 				B999C94B1EEA7B5E00385AEA /* PlistSerializationMock.swift */,
+				B9448C501EF10612006A3AB0 /* PyroAuthMock.swift */,
 				B99651E61EB8573A0046810D /* RequestMock.swift */,
 				B9EEEB421EE91CE900825311 /* RequestOperationMock.swift */,
 				B99651ED1EB85AF50046810D /* URLSessionMock.swift */,
@@ -324,6 +327,7 @@
 				B999C9541EEA8ADC00385AEA /* AuthRequestMock.swift in Sources */,
 				B90D2CF51EB70EE000FC0ADD /* PyrobaseTest.swift in Sources */,
 				B999C94A1EEA774100385AEA /* PlistReaderContentMock.swift in Sources */,
+				B9448C511EF10612006A3AB0 /* PyroAuthMock.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
