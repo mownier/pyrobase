@@ -32,7 +32,6 @@
 		B999C94C1EEA7B5E00385AEA /* PlistSerializationMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B999C94B1EEA7B5E00385AEA /* PlistSerializationMock.swift */; };
 		B999C94E1EEA7E6F00385AEA /* PlistReaderSample.plist in Resources */ = {isa = PBXBuildFile; fileRef = B999C94D1EEA7E6F00385AEA /* PlistReaderSample.plist */; };
 		B999C9511EEA836600385AEA /* PyroAuthTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B999C9501EEA836600385AEA /* PyroAuthTest.swift */; };
-		B999C9521EEA895B00385AEA /* PyroAuthInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = B999C9411EEA66B700385AEA /* PyroAuthInfo.plist */; };
 		B999C9541EEA8ADC00385AEA /* AuthRequestMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B999C9531EEA8ADC00385AEA /* AuthRequestMock.swift */; };
 		B9EEEB431EE91CE900825311 /* RequestOperationMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9EEEB421EE91CE900825311 /* RequestOperationMock.swift */; };
 		B9FC64AF1EE7A40800DE7CF3 /* RequestMethodTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9FC64AE1EE7A40800DE7CF3 /* RequestMethodTest.swift */; };
@@ -281,7 +280,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B999C9521EEA895B00385AEA /* PyroAuthInfo.plist in Resources */,
 				B999C94E1EEA7E6F00385AEA /* PlistReaderSample.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
