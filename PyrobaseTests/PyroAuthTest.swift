@@ -14,17 +14,18 @@ class PyroAuthTest: XCTestCase {
     func testCreate() {
         let key: String = "api_key"
         
-        var auth = PyroAuth.create(key: key)
+        var bundle: Bundle = .main
+        var auth = PyroAuth.create(key: key, bundle: bundle)
         XCTAssertNil(auth) // This is nil because Bundle.main's path is different when testing
         
-        let bundle: Bundle = Bundle(for: type(of: self))
-        auth = PyroAuth.create(key: key, bundle: bundle)
+        auth = PyroAuth.create(key: key)
         XCTAssertNotNil(auth)
         XCTAssertEqual(auth!.registerPath, "https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser")
         XCTAssertEqual(auth!.signInPath, "https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword")
         XCTAssertEqual(auth!.refreshPath, "https://securetoken.googleapis.com/v1/token")
         XCTAssertEqual(auth!.confirmationCodePath, "https://www.googleapis.com/identitytoolkit/v3/relyingparty/getOobConfirmationCode")
         
+        bundle = Bundle(for: type(of: self))
         auth = PyroAuth.create(key: key, bundle: bundle, plistName: "PlistReaderSample")
         XCTAssertTrue(auth!.signInPath.isEmpty)
         XCTAssertTrue(auth!.registerPath.isEmpty)
@@ -38,8 +39,7 @@ class PyroAuthTest: XCTestCase {
         let password: String = "12345"
         
         let request = AuthRequestMock()
-        let bundle: Bundle = Bundle(for: type(of: self))
-        let auth = PyroAuth.create(key: apiKey, bundle: bundle, request: request)!
+        let auth = PyroAuth.create(key: apiKey, request: request)!
         
         let expectation1 = expectation(description: "testRegister")
         
@@ -74,8 +74,7 @@ class PyroAuthTest: XCTestCase {
         let session = URLSessionMock()
         let operation = JSONRequestOperation.create()
         let request = Request(session: session, operation: operation)
-        let bundle: Bundle = Bundle(for: type(of: self))
-        let auth = PyroAuth.create(key: apiKey, bundle: bundle, request: request)!
+        let auth = PyroAuth.create(key: apiKey, request: request)!
         
         let taskResult = URLSessionDataTaskMock.Result()
         let expectation1 = expectation(description: "testRegister")
@@ -123,8 +122,7 @@ class PyroAuthTest: XCTestCase {
         let session = URLSessionMock()
         let operation = JSONRequestOperation.create()
         let request = Request(session: session, operation: operation)
-        let bundle: Bundle = Bundle(for: type(of: self))
-        let auth = PyroAuth.create(key: apiKey, bundle: bundle, request: request)!
+        let auth = PyroAuth.create(key: apiKey, request: request)!
         
         let taskResult = URLSessionDataTaskMock.Result()
         let expectation1 = expectation(description: "testRegister")
@@ -157,8 +155,7 @@ class PyroAuthTest: XCTestCase {
         let session = URLSessionMock()
         let operation = JSONRequestOperation.create()
         let request = Request(session: session, operation: operation)
-        let bundle: Bundle = Bundle(for: type(of: self))
-        let auth = PyroAuth.create(key: apiKey, bundle: bundle, request: request)!
+        let auth = PyroAuth.create(key: apiKey, request: request)!
         
         let taskResult = URLSessionDataTaskMock.Result()
         let expectation1 = expectation(description: "testRegister")
@@ -195,8 +192,7 @@ class PyroAuthTest: XCTestCase {
         let session = URLSessionMock()
         let operation = JSONRequestOperation.create()
         let request = Request(session: session, operation: operation)
-        let bundle: Bundle = Bundle(for: type(of: self))
-        let auth = PyroAuth.create(key: apiKey, bundle: bundle, request: request)!
+        let auth = PyroAuth.create(key: apiKey, request: request)!
         
         let taskResult = URLSessionDataTaskMock.Result()
         let expectation1 = expectation(description: "testRegister")
@@ -226,8 +222,7 @@ class PyroAuthTest: XCTestCase {
         let password: String = "12345"
         
         let request = AuthRequestMock()
-        let bundle: Bundle = Bundle(for: type(of: self))
-        let auth = PyroAuth.create(key: apiKey, bundle: bundle, request: request)!
+        let auth = PyroAuth.create(key: apiKey, request: request)!
         
         let expectation1 = expectation(description: "testSignIn")
         
@@ -262,8 +257,7 @@ class PyroAuthTest: XCTestCase {
         let session = URLSessionMock()
         let operation = JSONRequestOperation.create()
         let request = Request(session: session, operation: operation)
-        let bundle: Bundle = Bundle(for: type(of: self))
-        let auth = PyroAuth.create(key: apiKey, bundle: bundle, request: request)!
+        let auth = PyroAuth.create(key: apiKey, request: request)!
         
         let taskResult = URLSessionDataTaskMock.Result()
         let expectation1 = expectation(description: "testSignIn")
@@ -311,8 +305,7 @@ class PyroAuthTest: XCTestCase {
         let session = URLSessionMock()
         let operation = JSONRequestOperation.create()
         let request = Request(session: session, operation: operation)
-        let bundle: Bundle = Bundle(for: type(of: self))
-        let auth = PyroAuth.create(key: apiKey, bundle: bundle, request: request)!
+        let auth = PyroAuth.create(key: apiKey, request: request)!
         
         let taskResult = URLSessionDataTaskMock.Result()
         let expectation1 = expectation(description: "testSignIn")
@@ -345,8 +338,7 @@ class PyroAuthTest: XCTestCase {
         let session = URLSessionMock()
         let operation = JSONRequestOperation.create()
         let request = Request(session: session, operation: operation)
-        let bundle: Bundle = Bundle(for: type(of: self))
-        let auth = PyroAuth.create(key: apiKey, bundle: bundle, request: request)!
+        let auth = PyroAuth.create(key: apiKey, request: request)!
         
         let taskResult = URLSessionDataTaskMock.Result()
         let expectation1 = expectation(description: "testSignIn")
@@ -383,8 +375,7 @@ class PyroAuthTest: XCTestCase {
         let session = URLSessionMock()
         let operation = JSONRequestOperation.create()
         let request = Request(session: session, operation: operation)
-        let bundle: Bundle = Bundle(for: type(of: self))
-        let auth = PyroAuth.create(key: apiKey, bundle: bundle, request: request)!
+        let auth = PyroAuth.create(key: apiKey, request: request)!
         
         let taskResult = URLSessionDataTaskMock.Result()
         let expectation1 = expectation(description: "testSignIn")
@@ -413,8 +404,7 @@ class PyroAuthTest: XCTestCase {
         let refreshToken: String = "refresh_token"
         
         let request = AuthRequestMock()
-        let bundle: Bundle = Bundle(for: type(of: self))
-        let auth = PyroAuth.create(key: apiKey, bundle: bundle, request: request)!
+        let auth = PyroAuth.create(key: apiKey, request: request)!
         
         let expectation1 = expectation(description: "testRefresh")
         
@@ -446,8 +436,7 @@ class PyroAuthTest: XCTestCase {
         let session = URLSessionMock()
         let operation = JSONRequestOperation.create()
         let request = Request(session: session, operation: operation)
-        let bundle: Bundle = Bundle(for: type(of: self))
-        let auth = PyroAuth.create(key: apiKey, bundle: bundle, request: request)!
+        let auth = PyroAuth.create(key: apiKey, request: request)!
         
         let taskResult = URLSessionDataTaskMock.Result()
         let expectation1 = expectation(description: "testRefresh")
@@ -488,8 +477,7 @@ class PyroAuthTest: XCTestCase {
         let session = URLSessionMock()
         let operation = JSONRequestOperation.create()
         let request = Request(session: session, operation: operation)
-        let bundle: Bundle = Bundle(for: type(of: self))
-        let auth = PyroAuth.create(key: apiKey, bundle: bundle, request: request)!
+        let auth = PyroAuth.create(key: apiKey, request: request)!
         
         let taskResult = URLSessionDataTaskMock.Result()
         let expectation1 = expectation(description: "testRefresh")
@@ -521,8 +509,7 @@ class PyroAuthTest: XCTestCase {
         let session = URLSessionMock()
         let operation = JSONRequestOperation.create()
         let request = Request(session: session, operation: operation)
-        let bundle: Bundle = Bundle(for: type(of: self))
-        let auth = PyroAuth.create(key: apiKey, bundle: bundle, request: request)!
+        let auth = PyroAuth.create(key: apiKey, request: request)!
         
         let taskResult = URLSessionDataTaskMock.Result()
         let expectation1 = expectation(description: "testRefresh")
@@ -557,8 +544,7 @@ class PyroAuthTest: XCTestCase {
         let session = URLSessionMock()
         let operation = JSONRequestOperation.create()
         let request = Request(session: session, operation: operation)
-        let bundle: Bundle = Bundle(for: type(of: self))
-        let auth = PyroAuth.create(key: apiKey, bundle: bundle, request: request)!
+        let auth = PyroAuth.create(key: apiKey, request: request)!
         
         let taskResult = URLSessionDataTaskMock.Result()
         let expectation1 = expectation(description: "testRefresh")
@@ -587,8 +573,7 @@ class PyroAuthTest: XCTestCase {
         let email: String = "me@me.com"
         
         let request = AuthRequestMock()
-        let bundle: Bundle = Bundle(for: type(of: self))
-        let auth = PyroAuth.create(key: apiKey, bundle: bundle, request: request)!
+        let auth = PyroAuth.create(key: apiKey, request: request)!
         
         let expectation1 = expectation(description: "testSendPasswordReset")
         
@@ -620,8 +605,7 @@ class PyroAuthTest: XCTestCase {
         let session = URLSessionMock()
         let operation = JSONRequestOperation.create()
         let request = Request(session: session, operation: operation)
-        let bundle: Bundle = Bundle(for: type(of: self))
-        let auth = PyroAuth.create(key: apiKey, bundle: bundle, request: request)!
+        let auth = PyroAuth.create(key: apiKey, request: request)!
         
         let taskResult = URLSessionDataTaskMock.Result()
         let expectation1 = expectation(description: "testSendPasswordReset")
@@ -651,8 +635,7 @@ class PyroAuthTest: XCTestCase {
         let session = URLSessionMock()
         let operation = JSONRequestOperation.create()
         let request = Request(session: session, operation: operation)
-        let bundle: Bundle = Bundle(for: type(of: self))
-        let auth = PyroAuth.create(key: apiKey, bundle: bundle, request: request)!
+        let auth = PyroAuth.create(key: apiKey, request: request)!
         
         let taskResult = URLSessionDataTaskMock.Result()
         let expectation1 = expectation(description: "testSendPasswordReset")
