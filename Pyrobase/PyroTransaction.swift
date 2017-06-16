@@ -13,28 +13,30 @@ public class PyroTransaction {
     internal var tryCount: UInt
     internal(set) public var maxTry: UInt
     internal(set) public var temporaryPath: String
+    internal(set) public var temporaryPathExpiration: UInt
     
     public var baseURL: String {
         return path.baseURL
     }
     
-    public class func create(baseURL: String, accessToken: String, maxTry: UInt = 100, temporaryPath: String = "pyrobase_transactions") -> PyroTransaction {
+    public class func create(baseURL: String, accessToken: String, maxTry: UInt = 100, temporaryPath: String = "pyrobase_transactions", temporaryPathExpiration: UInt = 30) -> PyroTransaction {
         let path = RequestPath(baseURL: baseURL, accessToken: accessToken)
         let request = Request.create()
-        let transaction = PyroTransaction(request: request, path: path, maxTry: maxTry, temporaryPath: temporaryPath)
+        let transaction = PyroTransaction(request: request, path: path, maxTry: maxTry, temporaryPath: temporaryPath, temporaryPathExpiration: temporaryPathExpiration)
         return transaction
     }
     
-    public init(request: RequestProtocol, path: RequestPathProtocol, maxTry: UInt, temporaryPath: String) {
+    public init(request: RequestProtocol, path: RequestPathProtocol, maxTry: UInt, temporaryPath: String, temporaryPathExpiration: UInt) {
         self.request = request
         self.path = path
         self.maxTry = maxTry
         self.tryCount = 0
         self.temporaryPath = temporaryPath
+        self.temporaryPathExpiration = temporaryPathExpiration
     }
     
     public func run(parentPath: String, childKey: String, mutator: @escaping (Any) -> Any, completion: @escaping (RequestResult) -> Void) {
-        let readPath = path.build("\(temporaryPath)/\(parentPath)")
+        let readPath = path.build("\(temporaryPath)/\(parentPath)/\(childKey)")
         let param = Parameter(parentPath: parentPath, childKey: childKey, mutator: mutator, completion: completion)
         readTransaction(param: param, readPath: readPath)
     }
@@ -50,13 +52,31 @@ public class PyroTransaction {
                     return
                 }
                 
-                let info = [param.parentPath: true]
+                let info = ["\(param.parentPath)/\(param.childKey)": [".sv": "timestamp"]]
                 let writePath = self.path.build(self.temporaryPath)
                 self.writeTransaction(param: param, info: info, writePath: writePath)
                 
-            case .succeeded:
-                self.checkTryCount(param: param) {
-                    self.readTransaction(param: param, readPath: readPath)
+            case .succeeded(let info):
+                guard let string = info as? String, let timestamp = Double(string) else {
+                    self.checkTryCount(param: param) {
+                        self.readTransaction(param: param, readPath: readPath)
+                    }
+                    return
+                }
+                
+                let now = Date()
+                let transactionDate = Date(timeIntervalSince1970: timestamp / 1000)
+                let seconds: Int = Calendar.current.dateComponents([.second], from: transactionDate, to: now).second ?? 0
+                
+                if seconds > Int(self.temporaryPathExpiration) {
+                    let info = ["\(param.parentPath)/\(param.childKey)": [".sv": "timestamp"]]
+                    let writePath = self.path.build(self.temporaryPath)
+                    self.writeTransaction(param: param, info: info, writePath: writePath)
+                
+                } else {
+                    self.checkTryCount(param: param) {
+                        self.readTransaction(param: param, readPath: readPath)
+                    }
                 }
             }
         }
@@ -101,22 +121,26 @@ public class PyroTransaction {
                 }
                 
             case .succeeded:
-                self.deleteTransaction(param: param)
-                param.completion(result)
+                self.deleteTransaction(param: param) { _ in
+                    param.completion(result)
+                }
             }
         }
     }
     
-    internal func deleteTransaction(param: Parameter) {
+    internal func deleteTransaction(param: Parameter, completion: @escaping (RequestResult) -> Void) {
         let deletePath = path.build("\(temporaryPath)/\(param.parentPath)")
-        request.delete(path: deletePath) { _ in }
+        request.delete(path: deletePath) { result in
+            completion(result)
+        }
     }
     
-    internal func checkTryCount(param: Parameter, pass: () -> Void) {
+    internal func checkTryCount(param: Parameter, pass: @escaping () -> Void) {
         if tryCount + 1 == maxTry {
-            deleteTransaction(param: param)
-            param.completion(.failed(RequestError.maxTryReached))
-            tryCount = 0
+            deleteTransaction(param: param) { _ in
+                param.completion(.failed(RequestError.maxTryReached))
+                self.tryCount = 0
+            }
             
         } else {
             tryCount += 1
@@ -125,17 +149,3 @@ public class PyroTransaction {
     }
 }
 
-struct Parameter {
-    
-    let parentPath: String
-    let childKey: String
-    let mutator: (Any) -> Any
-    let completion: (RequestResult) -> Void
-    
-    init(parentPath: String, childKey: String, mutator: @escaping (Any) -> Any, completion: @escaping (RequestResult) -> Void) {
-        self.parentPath = parentPath
-        self.childKey = childKey
-        self.mutator = mutator
-        self.completion = completion
-    }
-}
