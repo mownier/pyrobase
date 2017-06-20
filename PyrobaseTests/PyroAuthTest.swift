@@ -34,6 +34,9 @@ class PyroAuthTest: XCTestCase {
         XCTAssertTrue(auth!.refreshPath.isEmpty)
         XCTAssertTrue(auth!.confirmationCodePath.isEmpty)
         
+        auth = PyroAuth.create(key: key, bundleIdentifier: bundleIdentifier, plistName: "Plist-NonExisting")
+        XCTAssertNil(auth)
+        
         auth = PyroAuthMock.create(key: key)
         XCTAssertNotNil(auth)
         XCTAssertTrue(PyroAuthMock.defaultRequest is Request)
