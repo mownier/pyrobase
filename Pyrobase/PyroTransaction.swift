@@ -55,7 +55,7 @@ public class PyroTransaction {
                     return
                 }
                 
-                if self.tempPath.isTransactionDateExpired(timestamp) {
+                if self.tempPath.isTransactionDateExpired(timestamp, now: Date()) {
                     self.writeTransaction(param: param)
                     
                 } else {
