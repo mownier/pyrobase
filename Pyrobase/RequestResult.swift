@@ -18,5 +18,4 @@ public enum RequestError: Error {
     case unparseableJSON
     case noURLResponse
     case nullJSON
-    case maxTryReached
 }
