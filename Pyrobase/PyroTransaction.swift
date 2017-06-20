@@ -10,141 +10,117 @@ public class PyroTransaction {
     
     internal var path: RequestPathProtocol
     internal var request: RequestProtocol
-    internal var tryCount: UInt
-    internal(set) public var maxTry: UInt
-    internal(set) public var temporaryPath: String
-    internal(set) public var temporaryPathExpiration: UInt
+    internal var tempPath: PyroTransactionTemporaryPathProtocol
     
     public var baseURL: String {
         return path.baseURL
     }
     
-    public class func create(baseURL: String, accessToken: String, maxTry: UInt = 100, temporaryPath: String = "pyrobase_transactions", temporaryPathExpiration: UInt = 30) -> PyroTransaction {
+    public class func create(baseURL: String, accessToken: String) -> PyroTransaction {
         let path = RequestPath(baseURL: baseURL, accessToken: accessToken)
         let request = Request.create()
-        let transaction = PyroTransaction(request: request, path: path, maxTry: maxTry, temporaryPath: temporaryPath, temporaryPathExpiration: temporaryPathExpiration)
+        let tempPath = PyroTransactionTemporaryPath.create()
+        let transaction = PyroTransaction(request: request, path: path, tempPath: tempPath)
         return transaction
     }
     
-    public init(request: RequestProtocol, path: RequestPathProtocol, maxTry: UInt, temporaryPath: String, temporaryPathExpiration: UInt) {
+    public init(request: RequestProtocol, path: RequestPathProtocol, tempPath: PyroTransactionTemporaryPathProtocol) {
         self.request = request
         self.path = path
-        self.maxTry = maxTry
-        self.tryCount = 0
-        self.temporaryPath = temporaryPath
-        self.temporaryPathExpiration = temporaryPathExpiration
+        self.tempPath = tempPath
     }
     
-    public func run(parentPath: String, childKey: String, mutator: @escaping (Any) -> Any, completion: @escaping (RequestResult) -> Void) {
-        let readPath = path.build("\(temporaryPath)/\(parentPath)/\(childKey)")
+    public func run(parentPath: String, childKey: String, mutator: @escaping (Any) -> Any, completion: @escaping (PyroTransactionResult) -> Void) {
         let param = Parameter(parentPath: parentPath, childKey: childKey, mutator: mutator, completion: completion)
-        readTransaction(param: param, readPath: readPath)
+        
+        readTransaction(param: param)
     }
     
-    internal func readTransaction(param: Parameter, readPath: String) {
+    internal func readTransaction(param: Parameter) {
+        let readPath = path.build("\(tempPath.key)/\(param.parentPath)/\(param.childKey)")
+        
         request.read(path: readPath, query: [:]) { result in
             switch result {
             case .failed(let info):
                 guard let errorInfo = info as? RequestError, errorInfo == .nullJSON else {
-                    self.checkTryCount(param: param) {
-                        self.readTransaction(param: param, readPath: readPath)
-                    }
+                    param.completion(.failed(info))
                     return
                 }
                 
-                let info = ["\(param.parentPath)/\(param.childKey)": [".sv": "timestamp"]]
-                let writePath = self.path.build(self.temporaryPath)
-                self.writeTransaction(param: param, info: info, writePath: writePath)
+                self.writeTransaction(param: param)
                 
             case .succeeded(let info):
                 guard let string = info as? String, let timestamp = Double(string) else {
-                    self.checkTryCount(param: param) {
-                        self.readTransaction(param: param, readPath: readPath)
-                    }
+                    param.completion(.failed(PyroTransactionError.invalidExpirationTimestamp))
                     return
                 }
                 
-                let now = Date()
-                let transactionDate = Date(timeIntervalSince1970: timestamp / 1000)
-                let seconds: Int = Calendar.current.dateComponents([.second], from: transactionDate, to: now).second ?? 0
-                
-                if seconds > Int(self.temporaryPathExpiration) {
-                    let info = ["\(param.parentPath)/\(param.childKey)": [".sv": "timestamp"]]
-                    let writePath = self.path.build(self.temporaryPath)
-                    self.writeTransaction(param: param, info: info, writePath: writePath)
-                
+                if self.tempPath.isTransactionDateExpired(timestamp) {
+                    self.writeTransaction(param: param)
+                    
                 } else {
-                    self.checkTryCount(param: param) {
-                        self.readTransaction(param: param, readPath: readPath)
-                    }
+                    param.completion(.failed(PyroTransactionError.activeTransactionNotDone))
                 }
             }
         }
     }
     
-    internal func writeTransaction(param: Parameter, info: [AnyHashable: Any], writePath: String) {
+    internal func writeTransaction(param: Parameter) {
+        let info = ["\(param.parentPath)/\(param.childKey)": [".sv": "timestamp"]]
+        let writePath = path.build(tempPath.key)
+        
         request.write(path: writePath, method: .patch, data: info) { result in
             switch result {
-            case .failed:
-                self.checkTryCount(param: param) {
-                    self.writeTransaction(param: param, info: info, writePath: writePath)
-                }
+            case .failed(let info):
+                param.completion(.failed(info))
                 
             case .succeeded:
-                let readPath = self.path.build("\(param.parentPath)/\(param.childKey)")
-                self.readChild(param: param, readPath: readPath)
+                self.readChild(param: param)
             }
         }
     }
     
-    internal func readChild(param: Parameter, readPath: String) {
+    internal func readChild(param: Parameter) {
+        let readPath = path.build("\(param.parentPath)/\(param.childKey)")
+        
         request.read(path: readPath, query: [:]) { result in
             switch result {
-            case .failed:
-                param.completion(result)
+            case .failed(let info):
+                self.deleteTransaction(param: param) { _ in
+                    param.completion(.failed(info))
+                }
                 
             case .succeeded(let info):
-                let newInfo = param.mutator(info)
-                let writePath = self.path.build(param.parentPath)
-                let data = [param.childKey: newInfo]
-                self.writeChild(param: param, info: data, writePath: writePath)
+                self.writeChild(param: param, info: info)
             }
         }
     }
     
-    internal func writeChild(param: Parameter, info: [AnyHashable: Any], writePath: String) {
-        request.write(path: writePath, method: .patch, data: info) { result in
+    internal func writeChild(param: Parameter, info: Any) {
+        let newInfo = param.mutator(info)
+        let writePath = path.build(param.parentPath)
+        let data = [param.childKey: newInfo]
+        
+        request.write(path: writePath, method: .patch, data: data) { result in
+            let completion: (RequestResult) -> Void
+            
             switch result {
-            case .failed:
-                self.checkTryCount(param: param) {
-                    self.writeChild(param: param, info: info, writePath: writePath)
-                }
+            case .failed(let info):
+                completion = { _ in param.completion(.failed(info)) }
                 
-            case .succeeded:
-                self.deleteTransaction(param: param) { _ in
-                    param.completion(result)
-                }
+            case .succeeded(let info):
+                completion = { _ in param.completion(.succeeded(info)) }
             }
+            
+            self.deleteTransaction(param: param, completion: completion)
         }
     }
     
     internal func deleteTransaction(param: Parameter, completion: @escaping (RequestResult) -> Void) {
-        let deletePath = path.build("\(temporaryPath)/\(param.parentPath)")
+        let deletePath = path.build("\(tempPath.key)/\(param.parentPath)")
+        
         request.delete(path: deletePath) { result in
             completion(result)
-        }
-    }
-    
-    internal func checkTryCount(param: Parameter, pass: @escaping () -> Void) {
-        if tryCount + 1 == maxTry {
-            deleteTransaction(param: param) { _ in
-                param.completion(.failed(RequestError.maxTryReached))
-                self.tryCount = 0
-            }
-            
-        } else {
-            tryCount += 1
-            pass()
         }
     }
 }
