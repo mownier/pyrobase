@@ -14,7 +14,7 @@ class PyroTransactionTemporaryPathMock: PyroTransactionTemporaryPathProtocol {
     var expiration: UInt = 0
     var isExpired: Bool = false
     
-    func isTransactionDateExpired(_ timestamp: Double = 0) -> Bool {
+    func isTransactionDateExpired(_ timestamp: Double = 0, now: Date) -> Bool {
         return isExpired
     }
 }
