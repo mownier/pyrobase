@@ -11,9 +11,9 @@ struct Parameter {
     let parentPath: String
     let childKey: String
     let mutator: (Any) -> Any
-    let completion: (RequestResult) -> Void
+    let completion: (PyroTransactionResult) -> Void
     
-    init(parentPath: String, childKey: String, mutator: @escaping (Any) -> Any, completion: @escaping (RequestResult) -> Void) {
+    init(parentPath: String, childKey: String, mutator: @escaping (Any) -> Any, completion: @escaping (PyroTransactionResult) -> Void) {
         self.parentPath = parentPath
         self.childKey = childKey
         self.mutator = mutator
