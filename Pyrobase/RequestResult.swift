@@ -18,4 +18,12 @@ public enum RequestError: Error {
     case unparseableJSON
     case noURLResponse
     case nullJSON
+    case unknown
+    
+    case badRequest
+    case unauthorized
+    case forbidden
+    case notFound
+    case internalServiceError
+    case serviceUnavailable
 }
