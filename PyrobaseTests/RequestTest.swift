@@ -14,7 +14,8 @@ class RequestTest: XCTestCase {
     func testRead() {
         let session = URLSessionMock()
         let operation = JSONRequestOperation.create()
-        let request = Request(session: session, operation: operation)
+        let response = RequestResponse()
+        let request = Request(session: session, operation: operation, response: response)
         let expectation1 = expectation(description: "testRead")
         request.read(path: "https://foo.firebaseio.com/users/12345/name.json?access_token=accessToken", query: [:]) { result in
             switch result {
@@ -33,7 +34,8 @@ class RequestTest: XCTestCase {
     func testReadWithInt() {
         let session = URLSessionMock()
         let operation = JSONRequestOperation.create()
-        let request = Request(session: session, operation: operation)
+        let response = RequestResponse()
+        let request = Request(session: session, operation: operation, response: response)
         let expectation1 = expectation(description: "testRead")
         request.read(path: "https://foo.firebaseio.com/users/12345/int.json?access_token=accessToken", query: [:]) { result in
             switch result {
@@ -54,7 +56,8 @@ class RequestTest: XCTestCase {
     func testReadWithDouble() {
         let session = URLSessionMock()
         let operation = JSONRequestOperation.create()
-        let request = Request(session: session, operation: operation)
+        let response = RequestResponse()
+        let request = Request(session: session, operation: operation, response: response)
         let expectation1 = expectation(description: "testRead")
         request.read(path: "https://foo.firebaseio.com/users/12345/double.json?access_token=accessToken", query: [:]) { result in
             switch result {
@@ -94,7 +97,8 @@ class RequestTest: XCTestCase {
         let taskResult = URLSessionDataTaskMock.Result()
         let session = URLSessionMock()
         let operation = JSONRequestOperation.create()
-        let request = Request(session: session, operation: operation)
+        let response = RequestResponse()
+        let request = Request(session: session, operation: operation, response: response)
         let expectation1 = expectation(description: "testRead")
         
         taskResult.error = URLSessionDataTaskMock.TaskMockError.mockError1
@@ -119,7 +123,8 @@ class RequestTest: XCTestCase {
         let taskResult = URLSessionDataTaskMock.Result()
         let session = URLSessionMock()
         let operation = JSONRequestOperation.create()
-        let request = Request(session: session, operation: operation)
+        let response = RequestResponse()
+        let request = Request(session: session, operation: operation, response: response)
         let expectation1 = expectation(description: "testRead")
         
         taskResult.response = nil
@@ -144,7 +149,8 @@ class RequestTest: XCTestCase {
         let taskResult = URLSessionDataTaskMock.Result()
         let session = URLSessionMock()
         let operation = JSONRequestOperation.create()
-        let request = Request(session: session, operation: operation)
+        let response = RequestResponse()
+        let request = Request(session: session, operation: operation, response: response)
         let expectation1 = expectation(description: "testRead")
         
         taskResult.response = HTTPURLResponse()
@@ -169,7 +175,8 @@ class RequestTest: XCTestCase {
         let taskResult = URLSessionDataTaskMock.Result()
         let session = URLSessionMock()
         let operation = RequestOperationMock()
-        let request = Request(session: session, operation: operation)
+        let response = RequestResponse()
+        let request = Request(session: session, operation: operation, response: response)
         let expectation1 = expectation(description: "testRead")
         
         taskResult.response = HTTPURLResponse()
@@ -195,7 +202,8 @@ class RequestTest: XCTestCase {
         let taskResult = URLSessionDataTaskMock.Result()
         let session = URLSessionMock()
         let operation = JSONRequestOperation.create()
-        let request = Request(session: session, operation: operation)
+        let response = RequestResponse()
+        let request = Request(session: session, operation: operation, response: response)
         let expectation1 = expectation(description: "testRead")
         
         taskResult.response = HTTPURLResponse()
@@ -239,7 +247,8 @@ class RequestTest: XCTestCase {
         let taskResult = URLSessionDataTaskMock.Result()
         let session = URLSessionMock()
         let operation = JSONRequestOperation.create()
-        let request = Request(session: session, operation: operation)
+        let response = RequestResponse()
+        let request = Request(session: session, operation: operation, response: response)
         let expectation1 = expectation(description: "testWrite")
         
         taskResult.error = URLSessionDataTaskMock.TaskMockError.mockError1
@@ -264,7 +273,8 @@ class RequestTest: XCTestCase {
         let taskResult = URLSessionDataTaskMock.Result()
         let session = URLSessionMock()
         let operation = JSONRequestOperation.create()
-        let request = Request(session: session, operation: operation)
+        let response = RequestResponse()
+        let request = Request(session: session, operation: operation, response: response)
         let expectation1 = expectation(description: "testWrite")
         
         taskResult.response = nil
@@ -289,7 +299,8 @@ class RequestTest: XCTestCase {
         let taskResult = URLSessionDataTaskMock.Result()
         let session = URLSessionMock()
         let operation = JSONRequestOperation.create()
-        let request = Request(session: session, operation: operation)
+        let response = RequestResponse()
+        let request = Request(session: session, operation: operation, response: response)
         let expectation1 = expectation(description: "testWrite")
         
         taskResult.response = HTTPURLResponse()
@@ -314,7 +325,8 @@ class RequestTest: XCTestCase {
         let taskResult = URLSessionDataTaskMock.Result()
         let session = URLSessionMock()
         let operation = RequestOperationMock()
-        let request = Request(session: session, operation: operation)
+        let response = RequestResponse()
+        let request = Request(session: session, operation: operation, response: response)
         let expectation1 = expectation(description: "testWrite")
         
         taskResult.response = HTTPURLResponse()
@@ -358,7 +370,8 @@ class RequestTest: XCTestCase {
         let taskResult = URLSessionDataTaskMock.Result()
         let session = URLSessionMock()
         let operation = JSONRequestOperation.create()
-        let request = Request(session: session, operation: operation)
+        let response = RequestResponse()
+        let request = Request(session: session, operation: operation, response: response)
         let expectation1 = expectation(description: "testDelete")
         
         taskResult.error = URLSessionDataTaskMock.TaskMockError.mockError1
@@ -383,7 +396,8 @@ class RequestTest: XCTestCase {
         let taskResult = URLSessionDataTaskMock.Result()
         let session = URLSessionMock()
         let operation = JSONRequestOperation.create()
-        let request = Request(session: session, operation: operation)
+        let response = RequestResponse()
+        let request = Request(session: session, operation: operation, response: response)
         let expectation1 = expectation(description: "testDelete")
         
         taskResult.response = nil
@@ -408,7 +422,8 @@ class RequestTest: XCTestCase {
         let taskResult = URLSessionDataTaskMock.Result()
         let session = URLSessionMock()
         let operation = JSONRequestOperation.create()
-        let request = Request(session: session, operation: operation)
+        let response = RequestResponse()
+        let request = Request(session: session, operation: operation, response: response)
         let expectation1 = expectation(description: "testDelete")
         
         taskResult.response = HTTPURLResponse()
@@ -433,7 +448,8 @@ class RequestTest: XCTestCase {
         let taskResult = URLSessionDataTaskMock.Result()
         let session = URLSessionMock()
         let operation = RequestOperationMock()
-        let request = Request(session: session, operation: operation)
+        let response = RequestResponse()
+        let request = Request(session: session, operation: operation, response: response)
         let expectation1 = expectation(description: "testDelete")
         
         taskResult.response = HTTPURLResponse()
@@ -459,7 +475,8 @@ class RequestTest: XCTestCase {
         let taskResult = URLSessionDataTaskMock.Result()
         let session = URLSessionMock()
         let operation = JSONRequestOperation.create()
-        let request = Request(session: session, operation: operation)
+        let response = RequestResponse()
+        let request = Request(session: session, operation: operation, response: response)
         let expectation1 = expectation(description: "testDelete")
         
         taskResult.response = HTTPURLResponse()
@@ -485,7 +502,8 @@ class RequestTest: XCTestCase {
         let taskResult = URLSessionDataTaskMock.Result()
         let session = URLSessionMock()
         let operation = JSONRequestOperation.create()
-        let request = Request(session: session, operation: operation)
+        let response = RequestResponse()
+        let request = Request(session: session, operation: operation, response: response)
         let expectation1 = expectation(description: "testWritePOST")
         
         taskResult.response = HTTPURLResponse()
@@ -511,7 +529,8 @@ class RequestTest: XCTestCase {
         let taskResult = URLSessionDataTaskMock.Result()
         let session = URLSessionMock()
         let operation = JSONRequestOperation.create()
-        let request = Request(session: session, operation: operation)
+        let response = RequestResponse()
+        let request = Request(session: session, operation: operation, response: response)
         let expectation1 = expectation(description: "testWritePUT")
         
         taskResult.response = HTTPURLResponse()
@@ -537,7 +556,8 @@ class RequestTest: XCTestCase {
         let taskResult = URLSessionDataTaskMock.Result()
         let session = URLSessionMock()
         let operation = JSONRequestOperation.create()
-        let request = Request(session: session, operation: operation)
+        let response = RequestResponse()
+        let request = Request(session: session, operation: operation, response: response)
         let expectation1 = expectation(description: "testWritePATCH")
         
         taskResult.response = HTTPURLResponse()
@@ -553,6 +573,84 @@ class RequestTest: XCTestCase {
                 XCTAssertTrue(info is RequestError)
                 let resultInfo = info as! RequestError
                 XCTAssertTrue(resultInfo == RequestError.nullJSON)
+            }
+            expectation1.fulfill()
+        }
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testReadShouldReturnErroneous() {
+        let taskResult = URLSessionDataTaskMock.Result()
+        let session = URLSessionMock()
+        let operation = JSONRequestOperation.create()
+        let response = RequestResponse()
+        let request = Request(session: session, operation: operation, response: response)
+        let expectation1 = expectation(description: "testRead")
+        
+        taskResult.response = HTTPURLResponse(url: URL(string: "https://sampleio.com")!, statusCode: 400, httpVersion: nil, headerFields: nil)
+        session.expectedDataTaskResult = taskResult
+        
+        request.read(path: "https://foo.firebaseio.com/users/12345/double.json?access_token=accessToken", query: [:]) { result in
+            switch result {
+            case .succeeded:
+                XCTFail()
+                
+            case .failed(let info):
+                XCTAssertTrue(info is RequestError)
+                let resultInfo = info as! RequestError
+                XCTAssertTrue(resultInfo == RequestError.badRequest)
+            }
+            expectation1.fulfill()
+        }
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testWriteShouldReturnErroneous() {
+        let taskResult = URLSessionDataTaskMock.Result()
+        let session = URLSessionMock()
+        let operation = RequestOperationMock()
+        let response = RequestResponse()
+        let request = Request(session: session, operation: operation, response: response)
+        let expectation1 = expectation(description: "testWrite")
+        
+        taskResult.response = HTTPURLResponse(url: URL(string: "https://sampleio.com")!, statusCode: 500, httpVersion: nil, headerFields: nil)
+        session.expectedDataTaskResult = taskResult
+        
+        request.write(path: "https://foo.firebaseio.com/users/12345/double.json?access_token=accessToken", method: .post, data: [:]) { result in
+            switch result {
+            case .succeeded:
+                XCTFail()
+                
+            case .failed(let info):
+                XCTAssertTrue(info is RequestError)
+                let errorInfo = info as! RequestError
+                XCTAssertTrue(errorInfo == RequestError.internalServiceError)
+            }
+            expectation1.fulfill()
+        }
+        waitForExpectations(timeout: 1)
+    }
+    
+    func testDeleteShouldReturnErroneous() {
+        let taskResult = URLSessionDataTaskMock.Result()
+        let session = URLSessionMock()
+        let operation = RequestOperationMock()
+        let response = RequestResponse()
+        let request = Request(session: session, operation: operation, response: response)
+        let expectation1 = expectation(description: "testDelete")
+        
+        taskResult.response = HTTPURLResponse(url: URL(string: "https://sampleio.com")!, statusCode: 404, httpVersion: nil, headerFields: nil)
+        session.expectedDataTaskResult = taskResult
+        
+        request.delete(path: "https://foo.firebaseio.com/users/12345/double.json?access_token=accessToken") { result in
+            switch result {
+            case .succeeded:
+                XCTFail()
+                
+            case .failed(let info):
+                XCTAssertTrue(info is RequestError)
+                let errorInfo = info as! RequestError
+                XCTAssertTrue(errorInfo == RequestError.notFound)
             }
             expectation1.fulfill()
         }
