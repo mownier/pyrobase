@@ -25,6 +25,10 @@ public class RequestPath: RequestPathProtocol {
     }
     
     public func build(_ path: String) -> String {
+        guard !baseURL.isEmpty else {
+            return ""
+        }
+        
         return "\(baseURL)/\(path).json?auth=\(accessToken)"
     }
 }
