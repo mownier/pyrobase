@@ -84,7 +84,8 @@ class PyroAuthTest: XCTestCase {
         
         let session = URLSessionMock()
         let operation = JSONRequestOperation.create()
-        let request = Request(session: session, operation: operation)
+        let response = RequestResponse()
+        let request = Request(session: session, operation: operation, response: response)
         let auth = PyroAuth.create(key: apiKey, request: request)!
         
         let taskResult = URLSessionDataTaskMock.Result()
@@ -132,7 +133,8 @@ class PyroAuthTest: XCTestCase {
         
         let session = URLSessionMock()
         let operation = JSONRequestOperation.create()
-        let request = Request(session: session, operation: operation)
+        let response = RequestResponse()
+        let request = Request(session: session, operation: operation, response: response)
         let auth = PyroAuth.create(key: apiKey, request: request)!
         
         let taskResult = URLSessionDataTaskMock.Result()
@@ -165,7 +167,8 @@ class PyroAuthTest: XCTestCase {
         
         let session = URLSessionMock()
         let operation = JSONRequestOperation.create()
-        let request = Request(session: session, operation: operation)
+        let response = RequestResponse()
+        let request = Request(session: session, operation: operation, response: response)
         let auth = PyroAuth.create(key: apiKey, request: request)!
         
         let taskResult = URLSessionDataTaskMock.Result()
@@ -202,7 +205,8 @@ class PyroAuthTest: XCTestCase {
         
         let session = URLSessionMock()
         let operation = JSONRequestOperation.create()
-        let request = Request(session: session, operation: operation)
+        let response = RequestResponse()
+        let request = Request(session: session, operation: operation, response: response)
         let auth = PyroAuth.create(key: apiKey, request: request)!
         
         let taskResult = URLSessionDataTaskMock.Result()
@@ -267,7 +271,8 @@ class PyroAuthTest: XCTestCase {
         
         let session = URLSessionMock()
         let operation = JSONRequestOperation.create()
-        let request = Request(session: session, operation: operation)
+        let response = RequestResponse()
+        let request = Request(session: session, operation: operation, response: response)
         let auth = PyroAuth.create(key: apiKey, request: request)!
         
         let taskResult = URLSessionDataTaskMock.Result()
@@ -315,7 +320,8 @@ class PyroAuthTest: XCTestCase {
         
         let session = URLSessionMock()
         let operation = JSONRequestOperation.create()
-        let request = Request(session: session, operation: operation)
+        let response = RequestResponse()
+        let request = Request(session: session, operation: operation, response: response)
         let auth = PyroAuth.create(key: apiKey, request: request)!
         
         let taskResult = URLSessionDataTaskMock.Result()
@@ -348,7 +354,8 @@ class PyroAuthTest: XCTestCase {
         
         let session = URLSessionMock()
         let operation = JSONRequestOperation.create()
-        let request = Request(session: session, operation: operation)
+        let response = RequestResponse()
+        let request = Request(session: session, operation: operation, response: response)
         let auth = PyroAuth.create(key: apiKey, request: request)!
         
         let taskResult = URLSessionDataTaskMock.Result()
@@ -385,7 +392,8 @@ class PyroAuthTest: XCTestCase {
         
         let session = URLSessionMock()
         let operation = JSONRequestOperation.create()
-        let request = Request(session: session, operation: operation)
+        let response = RequestResponse()
+        let request = Request(session: session, operation: operation, response: response)
         let auth = PyroAuth.create(key: apiKey, request: request)!
         
         let taskResult = URLSessionDataTaskMock.Result()
@@ -446,7 +454,8 @@ class PyroAuthTest: XCTestCase {
         
         let session = URLSessionMock()
         let operation = JSONRequestOperation.create()
-        let request = Request(session: session, operation: operation)
+        let response = RequestResponse()
+        let request = Request(session: session, operation: operation, response: response)
         let auth = PyroAuth.create(key: apiKey, request: request)!
         
         let taskResult = URLSessionDataTaskMock.Result()
@@ -487,7 +496,8 @@ class PyroAuthTest: XCTestCase {
         
         let session = URLSessionMock()
         let operation = JSONRequestOperation.create()
-        let request = Request(session: session, operation: operation)
+        let response = RequestResponse()
+        let request = Request(session: session, operation: operation, response: response)
         let auth = PyroAuth.create(key: apiKey, request: request)!
         
         let taskResult = URLSessionDataTaskMock.Result()
@@ -519,7 +529,8 @@ class PyroAuthTest: XCTestCase {
         
         let session = URLSessionMock()
         let operation = JSONRequestOperation.create()
-        let request = Request(session: session, operation: operation)
+        let response = RequestResponse()
+        let request = Request(session: session, operation: operation, response: response)
         let auth = PyroAuth.create(key: apiKey, request: request)!
         
         let taskResult = URLSessionDataTaskMock.Result()
@@ -554,7 +565,8 @@ class PyroAuthTest: XCTestCase {
         
         let session = URLSessionMock()
         let operation = JSONRequestOperation.create()
-        let request = Request(session: session, operation: operation)
+        let response = RequestResponse()
+        let request = Request(session: session, operation: operation, response: response)
         let auth = PyroAuth.create(key: apiKey, request: request)!
         
         let taskResult = URLSessionDataTaskMock.Result()
@@ -615,7 +627,8 @@ class PyroAuthTest: XCTestCase {
         
         let session = URLSessionMock()
         let operation = JSONRequestOperation.create()
-        let request = Request(session: session, operation: operation)
+        let response = RequestResponse()
+        let request = Request(session: session, operation: operation, response: response)
         let auth = PyroAuth.create(key: apiKey, request: request)!
         
         let taskResult = URLSessionDataTaskMock.Result()
@@ -645,7 +658,8 @@ class PyroAuthTest: XCTestCase {
         
         let session = URLSessionMock()
         let operation = JSONRequestOperation.create()
-        let request = Request(session: session, operation: operation)
+        let response = RequestResponse()
+        let request = Request(session: session, operation: operation, response: response)
         let auth = PyroAuth.create(key: apiKey, request: request)!
         
         let taskResult = URLSessionDataTaskMock.Result()
