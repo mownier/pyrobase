@@ -16,6 +16,7 @@
 		B94021DB1EFCE64A005B09D0 /* PyroEventSourceSessionProviderTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94021DA1EFCE64A005B09D0 /* PyroEventSourceSessionProviderTest.swift */; };
 		B94021DD1EFCE7CF005B09D0 /* URLSessionDataDelegateMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94021DC1EFCE7CF005B09D0 /* URLSessionDataDelegateMock.swift */; };
 		B94021DF1EFCEAF5005B09D0 /* PyroEventSourceParserTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94021DE1EFCEAF5005B09D0 /* PyroEventSourceParserTest.swift */; };
+		B94021E11EFCEF28005B09D0 /* PyroEventSourceMessageTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B94021E01EFCEF28005B09D0 /* PyroEventSourceMessageTest.swift */; };
 		B9448C511EF10612006A3AB0 /* PyroAuthMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B9448C501EF10612006A3AB0 /* PyroAuthMock.swift */; };
 		B951C2F51EEBB2C8004DA16F /* PyroAuthResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = B951C2F41EEBB2C8004DA16F /* PyroAuthResult.swift */; };
 		B956AC9B1EF8BE4C002D6B10 /* PyroTransactionMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B956AC9A1EF8BE4C002D6B10 /* PyroTransactionMock.swift */; };
@@ -83,6 +84,7 @@
 		B94021DA1EFCE64A005B09D0 /* PyroEventSourceSessionProviderTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PyroEventSourceSessionProviderTest.swift; sourceTree = "<group>"; };
 		B94021DC1EFCE7CF005B09D0 /* URLSessionDataDelegateMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLSessionDataDelegateMock.swift; sourceTree = "<group>"; };
 		B94021DE1EFCEAF5005B09D0 /* PyroEventSourceParserTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PyroEventSourceParserTest.swift; sourceTree = "<group>"; };
+		B94021E01EFCEF28005B09D0 /* PyroEventSourceMessageTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PyroEventSourceMessageTest.swift; sourceTree = "<group>"; };
 		B9448C501EF10612006A3AB0 /* PyroAuthMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PyroAuthMock.swift; sourceTree = "<group>"; };
 		B951C2F41EEBB2C8004DA16F /* PyroAuthResult.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PyroAuthResult.swift; sourceTree = "<group>"; };
 		B956AC9A1EF8BE4C002D6B10 /* PyroTransactionMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PyroTransactionMock.swift; sourceTree = "<group>"; };
@@ -242,6 +244,7 @@
 				B9FC64AE1EE7A40800DE7CF3 /* RequestMethodTest.swift */,
 				B99651E21EB84EAB0046810D /* RequestPathTest.swift */,
 				B99651EB1EB858900046810D /* RequestTest.swift */,
+				B94021E01EFCEF28005B09D0 /* PyroEventSourceMessageTest.swift */,
 			);
 			name = Tests;
 			sourceTree = "<group>";
@@ -411,6 +414,7 @@
 				B999C9541EEA8ADC00385AEA /* AuthRequestMock.swift in Sources */,
 				B93DEC7D1EFCBC210027D58D /* PyroEventSourceSessionProviderMock.swift in Sources */,
 				B967DF021EF7ADEC00CF8D5F /* PyroTransactionTemporaryPathMock.swift in Sources */,
+				B94021E11EFCEF28005B09D0 /* PyroEventSourceMessageTest.swift in Sources */,
 				B90D2CF51EB70EE000FC0ADD /* PyrobaseTest.swift in Sources */,
 				B999C94A1EEA774100385AEA /* PlistReaderContentMock.swift in Sources */,
 				B9448C511EF10612006A3AB0 /* PyroAuthMock.swift in Sources */,
