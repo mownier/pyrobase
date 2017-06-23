@@ -17,6 +17,7 @@ class URLSessionMock: URLSession {
     ]
     
     var expectedDataTaskResult: URLSessionDataTaskMock.Result?
+    var shouldExecuteTaskResume: Bool = true
     
     override func dataTask(with request: URLRequest, completionHandler: @escaping (Data?, URLResponse?, Error?) -> Void) -> URLSessionDataTask {
         let url = request.url!
@@ -32,6 +33,12 @@ class URLSessionMock: URLSession {
             task.result.error = nil
         }
 
+        return task
+    }
+    
+    override func dataTask(with url: URL) -> URLSessionDataTask {
+        let task = URLSessionDataTaskMock(httpResponse: nil)
+        task.shouldExecuteResume = shouldExecuteTaskResume
         return task
     }
 }
@@ -52,13 +59,29 @@ class URLSessionDataTaskMock: URLSessionDataTask {
     
     var handler: (Data?, URLResponse?, Error?) -> Void
     var result: Result
+    var httpResponse: HTTPURLResponse?
+    var shouldExecuteResume: Bool = true
+    
+    override var response: URLResponse? {
+        return httpResponse
+    }
     
     init(handler: @escaping (Data?, URLResponse?, Error?) -> Void) {
         self.handler = handler
         self.result = Result()
     }
     
+    convenience init(httpResponse: HTTPURLResponse?) {
+        let handler: (Data?, URLResponse?, Error?) -> Void = { _, _, _ in }
+        self.init(handler: handler)
+        self.httpResponse = httpResponse
+    }
+    
     override func resume() {
+        guard shouldExecuteResume else {
+            return
+        }
+        
         handler(result.data, result.response, result.error)
     }
 }
