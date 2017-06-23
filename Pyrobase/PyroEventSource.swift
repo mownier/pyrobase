@@ -13,7 +13,7 @@ public enum PyroEventSourceError: Error {
     case forcedClose
 }
 
-public enum PryoEventSourceState {
+public enum PyroEventSourceState {
     
     case connecting
     case open
@@ -37,7 +37,7 @@ public class PyroEventSource: NSObject {
     internal var parser: PyroEventSourceParserProtocol
     internal var session: URLSession!
     internal(set) public var lastEventID: String
-    internal(set) public var state: PryoEventSourceState {
+    internal(set) public var state: PyroEventSourceState {
         didSet {
             switch state {
             case .open: callback?.pyroEventSourceOnOpen(self)
