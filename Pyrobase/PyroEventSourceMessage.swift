@@ -19,9 +19,9 @@ public struct PyroEventSourceMessage {
     }
 }
 
-extension PyroEventSourceMessage: CustomDebugStringConvertible {
+extension PyroEventSourceMessage: CustomStringConvertible {
     
-    public var debugDescription: String {
+    public var description: String {
         return "\nid: \(id)\nevent: \(event)\ndata: \(data)\n"
     }
 }
