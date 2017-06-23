@@ -68,7 +68,7 @@ public class PyroEventSource: NSObject {
     }
     
     public func close() {
-        session.invalidateAndCancel()
+        session?.invalidateAndCancel()
         session = nil
         state = .closed
     }
@@ -85,8 +85,8 @@ public class PyroEventSource: NSObject {
         }
         
         session = sessionProvider.createSession(for: self, lastEventID: lastEventID)
-        session.dataTask(with: url).resume()
         state = .connecting
+        session.dataTask(with: url).resume()
     }
     
     internal func isForcedClose(_ response: HTTPURLResponse?) -> Bool {
@@ -103,14 +103,14 @@ extension PyroEventSource: URLSessionDataDelegate {
         }
         
         guard !isForcedClose(task.response as? HTTPURLResponse) else {
-            callback?.pyroEventSource(self, didReceiveError: PyroEventSourceError.forcedClose)
             close()
+            callback?.pyroEventSource(self, didReceiveError: PyroEventSourceError.forcedClose)
             return
         }
         
         if let responseError = response.isErroneous(task.response as? HTTPURLResponse) {
-            callback?.pyroEventSource(self, didReceiveError: responseError)
             close()
+            callback?.pyroEventSource(self, didReceiveError: responseError)
             
         } else {
             let message = parser.parse(data)
@@ -120,35 +120,26 @@ extension PyroEventSource: URLSessionDataDelegate {
     }
     
     public func urlSession(_ session: URLSession, dataTask task: URLSessionDataTask, didReceive httpResponse: URLResponse, completionHandler: @escaping (URLSession.ResponseDisposition) -> Void) {
-        guard !isForcedClose(httpResponse as? HTTPURLResponse) else {
-            callback?.pyroEventSource(self, didReceiveError: PyroEventSourceError.forcedClose)
-            close()
-            return
-        }
-        
         if let responseError = response.isErroneous(httpResponse as? HTTPURLResponse) {
-            callback?.pyroEventSource(self, didReceiveError: responseError)
             close()
+            callback?.pyroEventSource(self, didReceiveError: responseError)
             
         } else {
-            completionHandler(.allow)
             state = .open
+            completionHandler(.allow)
         }
     }
     
     public func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
+        close()
+        
         guard !isForcedClose(task.response as? HTTPURLResponse) else {
             callback?.pyroEventSource(self, didReceiveError: PyroEventSourceError.forcedClose)
-            close()
             return
         }
         
         if let responseError = response.isErroneous(task.response as? HTTPURLResponse) {
             callback?.pyroEventSource(self, didReceiveError: responseError)
-            close()
-        
-        } else {
-            callback?.pyroEventSource(self, didReceiveError: error ?? RequestError.unknown)
         }
     }
 }
