@@ -17,10 +17,12 @@ public class Request: RequestProtocol {
     
     internal var session: URLSession
     internal var operation: RequestOperation
+    internal var response: RequestResponseProtocol
     
-    public init(session: URLSession, operation: RequestOperation) {
+    public init(session: URLSession, operation: RequestOperation, response: RequestResponseProtocol) {
         self.session = session
         self.operation = operation
+        self.response = response
     }
     
     public func read(path: String, query: [AnyHashable: Any], completion: @escaping (RequestResult) -> Void) {
@@ -53,6 +55,13 @@ public class Request: RequestProtocol {
                 return
             }
             
+            let error = self.response.isErroneous(response as? HTTPURLResponse)
+            
+            guard error == nil else {
+                completion(.failed(error!))
+                return
+            }
+            
             guard data != nil else {
                 completion(.succeeded([:]))
                 return
@@ -82,7 +91,8 @@ extension Request {
     public class func create() -> Request {
         let session = URLSession.shared
         let operation = JSONRequestOperation.create()
-        let request = Request(session: session, operation: operation)
+        let response = RequestResponse()
+        let request = Request(session: session, operation: operation, response: response)
         return request
     }
 }
