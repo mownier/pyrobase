@@ -142,6 +142,13 @@ class JSONRequestOperationTest: XCTestCase {
         let operation = JSONRequestOperation.create()
         XCTAssertTrue(operation.serialization == JSONSerialization.self)
     }
+    
+    func testBuildForGETWithData() {
+        let operation = JSONRequestOperation.create()
+        let url = URL(string: "https://foo.firebaseio.com")!
+        let request = operation.build(url: url, method: .get, data: ["data": 1])
+        XCTAssertNil(request.httpBody)
+    }
 }
 
 
