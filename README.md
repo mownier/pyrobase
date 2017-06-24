@@ -12,6 +12,14 @@ $ vim Podfile
 $ pod install
 ```
 
+### Carthage
+```shell
+$ brew install carthage
+$ vim Cartfile
+// Add `github "mownier/Pyrobase" ~> 1.0` in your cartfile
+$ carthage update
+```
+
 ## Usage
 
 ### Authentication
