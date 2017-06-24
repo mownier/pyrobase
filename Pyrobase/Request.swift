@@ -38,7 +38,7 @@ public class Request: RequestProtocol {
     }
     
     internal func request(_ path: String, _ method: RequestMethod, _ data: [AnyHashable: Any], _ completion: @escaping (RequestResult) -> Void) {
-        guard let url = URL(string: path) else {
+        guard let url = buildURL(path, method, data) else {
             completion(.failed(RequestError.invalidURL))
             return
         }
@@ -83,6 +83,34 @@ public class Request: RequestProtocol {
             }
         }
         task.resume()
+    }
+    
+    internal func buildURL(_ path: String, _ method: RequestMethod, _ data: [AnyHashable: Any]) -> URL? {
+        switch method {
+        case .get where !data.isEmpty:
+            guard !path.isEmpty, var components = URLComponents(string: path) else {
+                return nil
+            }
+            
+            var queryItems = [URLQueryItem]()
+            
+            for (key, value) in data {
+                let item = URLQueryItem(name: "\(key)", value: "\(value)")
+                queryItems.insert(item, at: 0)
+            }
+            
+            if components.queryItems != nil {
+                components.queryItems!.append(contentsOf: queryItems)
+                
+            } else {
+                components.queryItems = queryItems
+            }
+            
+            return components.url
+            
+        default:
+            return URL(string: path)
+        }
     }
 }
 
