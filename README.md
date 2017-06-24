@@ -1,6 +1,17 @@
 # Pyrobase
 An iOS lightweight wrapper for Firebase REST API. For more Firebase's details, see it [here.](https://firebase.google.com/docs/reference/rest/database/) It is written in Swift and has 100% code coverage.
 
+## Installation
+
+### Cocoapods
+```shell
+$ pod repo update
+$ pod init
+$ vim Podfile
+// Add `pod Pyrobase` in your podfile
+$ pod install
+```
+
 ## Usage
 
 ### Authentication
