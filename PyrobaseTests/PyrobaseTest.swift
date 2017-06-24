@@ -189,4 +189,29 @@ class PyrobaseTest: XCTestCase {
         
         XCTAssertEqual(pyrobase.baseURL, baseURL)
     }
+    
+    func testGetWithQuery() {
+        let baseURL = "https://foo.firebaseio.com"
+        let accessToken = "accessToken"
+        let path = RequestPath(baseURL: baseURL, accessToken: accessToken)
+        let session = URLSessionMock()
+        let operation = JSONRequestOperation.create()
+        let response = RequestResponse()
+        let request = Request(session: session, operation: operation, response: response)
+        let pyrobase = Pyrobase(request: request, path: path)
+        let query: [AnyHashable: Any] = ["orderBy": "\"$key\"", "limitToFirst": 1]
+        let expectation1 = expectation(description: "testGet")
+        pyrobase.get(path: "name", query: query) { result in
+            switch result {
+            case .failed:
+                XCTFail()
+                
+            case .succeeded:
+                break
+            }
+            expectation1.fulfill()
+        }
+        
+        waitForExpectations(timeout: 1)
+    }
 }
