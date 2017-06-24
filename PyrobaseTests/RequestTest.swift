@@ -656,4 +656,21 @@ class RequestTest: XCTestCase {
         }
         waitForExpectations(timeout: 1)
     }
+    
+    func testBuildURLforGETWithNonEmptyData() {
+        let request = Request.create()
+        var path = "https://foo.firebaseio.com/posts"
+        var url = request.buildURL(path, .get, ["orderBy": "\"$key\"", "limitToFirst": 1])
+        XCTAssertNotNil(url)
+        XCTAssertEqual(url!.absoluteString, "\(path)?orderBy=%22$key%22&limitToFirst=1")
+    
+        let accessToken = "accessToken"
+        path = "https://foo.firebaseio.com/posts.json?auth=\(accessToken)"
+        url = request.buildURL(path, .get, ["orderBy": "\"$key\"", "limitToFirst": 1])
+        XCTAssertNotNil(url)
+        XCTAssertEqual(url!.absoluteString, "\(path)&orderBy=%22$key%22&limitToFirst=1")
+        
+        url = request.buildURL("", .get, ["orderBy": "\"$key\"", "limitToFirst": 1])
+        XCTAssertNil(url)
+    }
 }
