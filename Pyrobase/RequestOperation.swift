@@ -32,7 +32,7 @@ public class JSONRequestOperation: RequestOperation {
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.httpMethod = "\(method)"
         
-        if !data.isEmpty {
+        if !data.isEmpty && method != .get {
             request.httpBody = try? serialization.data(withJSONObject: data, options: [])
         }
         
