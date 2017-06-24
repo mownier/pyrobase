@@ -229,6 +229,25 @@ eventSource.stream("chat/rooms/hdjye53910kwdop")
 eventSource.close()
 ```
 
+### Query Parameters
+Always keep in mind of adding `.indexOn` in your rules for the path you want to query. You may receive a `badRequest` error if you don't set it.
+
+```swift
+let query = ["orderBy": "\"$key\"", "limitToFirst": 1]
+pyrobase.get("posts", query: query) { result in
+   switch result {
+    case .failed(let error):
+        print(error)
+        // Do some stuff
+            
+    case .succeeded(let data):
+        print(data)
+        // Do some stuff
+    }
+}
+```
+
+
 ### License
 
 MIT License
