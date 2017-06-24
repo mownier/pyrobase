@@ -216,7 +216,7 @@ let callback = StreamCallback()
 let baseURL = "https://foo.firebaseio.com"
 let accessToken = "accessToken"
 let eventSource = PyroEventSource.create(baseURL: baseURL, accessToken: accessToken)
-eventSource.callback = self
+eventSource.callback = callback
 ```
 
 #### Stream
