@@ -15,38 +15,38 @@ class RequestResponseTest: XCTestCase {
         let response = RequestResponse()
         
         var httpResponse = HTTPURLResponse(url: URL(string: "https://sampleio.com")!, statusCode: 400, httpVersion: nil, headerFields: nil)!
-        var error = response.isErroneous(httpResponse)
+        var error = response.isErroneous(httpResponse, data: nil)
         XCTAssertNotNil(error)
-        XCTAssertTrue(error as! RequestError == .badRequest)
+        XCTAssertTrue(error as! RequestError == .badRequest(""))
     
         httpResponse = HTTPURLResponse(url: URL(string: "https://sampleio.com")!, statusCode: 401, httpVersion: nil, headerFields: nil)!
-        error = response.isErroneous(httpResponse)
+        error = response.isErroneous(httpResponse, data: nil)
         XCTAssertNotNil(error)
-        XCTAssertTrue(error as! RequestError == .unauthorized)
+        XCTAssertTrue(error as! RequestError == .unauthorized(""))
     
         httpResponse = HTTPURLResponse(url: URL(string: "https://sampleio.com")!, statusCode: 403, httpVersion: nil, headerFields: nil)!
-        error = response.isErroneous(httpResponse)
+        error = response.isErroneous(httpResponse, data: nil)
         XCTAssertNotNil(error)
-        XCTAssertTrue(error as! RequestError == .forbidden)
+        XCTAssertTrue(error as! RequestError == .forbidden(""))
     
         httpResponse = HTTPURLResponse(url: URL(string: "https://sampleio.com")!, statusCode: 404, httpVersion: nil, headerFields: nil)!
-        error = response.isErroneous(httpResponse)
+        error = response.isErroneous(httpResponse, data: nil)
         XCTAssertNotNil(error)
-        XCTAssertTrue(error as! RequestError == .notFound)
+        XCTAssertTrue(error as! RequestError == .notFound(""))
         
         httpResponse = HTTPURLResponse(url: URL(string: "https://sampleio.com")!, statusCode: 500, httpVersion: nil, headerFields: nil)!
-        error = response.isErroneous(httpResponse)
+        error = response.isErroneous(httpResponse, data: nil)
         XCTAssertNotNil(error)
-        XCTAssertTrue(error as! RequestError == .internalServiceError)
+        XCTAssertTrue(error as! RequestError == .internalServiceError(""))
         
         httpResponse = HTTPURLResponse(url: URL(string: "https://sampleio.com")!, statusCode: 503, httpVersion: nil, headerFields: nil)!
-        error = response.isErroneous(httpResponse)
+        error = response.isErroneous(httpResponse, data: nil)
         XCTAssertNotNil(error)
-        XCTAssertTrue(error as! RequestError == .serviceUnavailable)
+        XCTAssertTrue(error as! RequestError == .serviceUnavailable(""))
         
         httpResponse = HTTPURLResponse(url: URL(string: "https://sampleio.com")!, statusCode: 200, httpVersion: nil, headerFields: nil)!
-        error = response.isErroneous(httpResponse)
+        error = response.isErroneous(httpResponse, data: nil)
         XCTAssertNil(error)
-        XCTAssertNil(response.isErroneous(nil))
+        XCTAssertNil(response.isErroneous(nil, data: nil))
     }
 }
