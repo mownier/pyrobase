@@ -161,7 +161,7 @@ class PyroEventSourceTest: XCTestCase {
         let httpResponse = HTTPURLResponse(url: URL(string: "https://sampleio.com")!, statusCode: 500, httpVersion: nil, headerFields: nil)
         let task = URLSessionDataTaskMock(httpResponse: httpResponse)
         let data = Data(bytes: [0,1,1,2,3,5,8])
-        expectedRequestError = RequestError.internalServiceError
+        expectedRequestError = RequestError.internalServiceError("")
         eventSource = PyroEventSource.create(baseURL: baseURL, accessToken: accessToken)
         eventSource.state = .open
         eventSource.callback = self
@@ -194,7 +194,7 @@ class PyroEventSourceTest: XCTestCase {
         let httpResponse = HTTPURLResponse(url: URL(string: "https://sampleio.com")!, statusCode: 500, httpVersion: nil, headerFields: nil)
         let task = URLSessionDataTaskMock(httpResponse: httpResponse)
         let completion: (URLSession.ResponseDisposition) -> Void = { _ in }
-        expectedRequestError = RequestError.internalServiceError
+        expectedRequestError = RequestError.internalServiceError("")
         eventSource = PyroEventSource.create(baseURL: baseURL, accessToken: accessToken)
         eventSource.state = .open
         eventSource.callback = self
@@ -213,7 +213,7 @@ class PyroEventSourceTest: XCTestCase {
             XCTAssertTrue(self.eventSource.state == .open)
             expectation1.fulfill()
         }
-        expectedRequestError = RequestError.internalServiceError
+        expectedRequestError = RequestError.internalServiceError("")
         eventSource = PyroEventSource.create(baseURL: baseURL, accessToken: accessToken)
         eventSource.state = .open
         eventSource.callback = self
@@ -252,7 +252,7 @@ class PyroEventSourceTest: XCTestCase {
         let session = URLSession()
         let httpResponse = HTTPURLResponse(url: URL(string: "https://sampleio.com")!, statusCode: 500, httpVersion: nil, headerFields: nil)
         let task = URLSessionDataTaskMock(httpResponse: httpResponse)
-        expectedRequestError = RequestError.internalServiceError
+        expectedRequestError = RequestError.internalServiceError("")
         eventSource = PyroEventSource.create(baseURL: baseURL, accessToken: accessToken)
         eventSource.state = .open
         eventSource.callback = self

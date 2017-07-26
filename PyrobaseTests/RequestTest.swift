@@ -598,7 +598,7 @@ class RequestTest: XCTestCase {
             case .failed(let info):
                 XCTAssertTrue(info is RequestError)
                 let resultInfo = info as! RequestError
-                XCTAssertTrue(resultInfo == RequestError.badRequest)
+                XCTAssertTrue(resultInfo == .badRequest(""))
             }
             expectation1.fulfill()
         }
@@ -624,7 +624,7 @@ class RequestTest: XCTestCase {
             case .failed(let info):
                 XCTAssertTrue(info is RequestError)
                 let errorInfo = info as! RequestError
-                XCTAssertTrue(errorInfo == RequestError.internalServiceError)
+                XCTAssertTrue(errorInfo == .internalServiceError(""))
             }
             expectation1.fulfill()
         }
@@ -650,7 +650,7 @@ class RequestTest: XCTestCase {
             case .failed(let info):
                 XCTAssertTrue(info is RequestError)
                 let errorInfo = info as! RequestError
-                XCTAssertTrue(errorInfo == RequestError.notFound)
+                XCTAssertTrue(errorInfo == .notFound(""))
             }
             expectation1.fulfill()
         }
