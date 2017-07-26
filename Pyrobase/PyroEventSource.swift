@@ -108,7 +108,7 @@ extension PyroEventSource: URLSessionDataDelegate {
             return
         }
         
-        if let responseError = response.isErroneous(task.response as? HTTPURLResponse) {
+        if let responseError = response.isErroneous(task.response as? HTTPURLResponse, data: data) {
             close()
             callback?.pyroEventSource(self, didReceiveError: responseError)
             
@@ -120,7 +120,7 @@ extension PyroEventSource: URLSessionDataDelegate {
     }
     
     public func urlSession(_ session: URLSession, dataTask task: URLSessionDataTask, didReceive httpResponse: URLResponse, completionHandler: @escaping (URLSession.ResponseDisposition) -> Void) {
-        if let responseError = response.isErroneous(httpResponse as? HTTPURLResponse) {
+        if let responseError = response.isErroneous(httpResponse as? HTTPURLResponse, data: nil) {
             close()
             callback?.pyroEventSource(self, didReceiveError: responseError)
             
@@ -138,7 +138,7 @@ extension PyroEventSource: URLSessionDataDelegate {
             return
         }
         
-        if let responseError = response.isErroneous(task.response as? HTTPURLResponse) {
+        if let responseError = response.isErroneous(task.response as? HTTPURLResponse, data: nil) {
             callback?.pyroEventSource(self, didReceiveError: responseError)
         }
     }

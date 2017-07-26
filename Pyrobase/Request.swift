@@ -55,7 +55,7 @@ public class Request: RequestProtocol {
                 return
             }
             
-            let error = self.response.isErroneous(response as? HTTPURLResponse)
+            let error = self.response.isErroneous(response as? HTTPURLResponse, data: data)
             
             guard error == nil else {
                 completion(.failed(error!))
