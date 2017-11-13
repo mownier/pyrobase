@@ -35,7 +35,12 @@ class RequestMock: RequestProtocol {
                 completion(.succeeded(expectedData.removeFirst()))
                 
             } else {
-                completion(.succeeded(content[path]!))
+                if let item = content[path] {
+                    completion(.succeeded(item))
+                    
+                } else {
+                    completion(.succeeded("OK"))
+                }
             }
         }
     }
