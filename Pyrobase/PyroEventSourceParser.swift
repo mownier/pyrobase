@@ -31,10 +31,10 @@ public class PyroEventSourceParser: PyroEventSourceParserProtocol {
                 }
                 
                 let keyRange = Range<String.Index>(uncheckedBounds: (line.startIndex, colonRange.lowerBound))
-                let key = line.substring(with: keyRange).trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+                let key = String(line[keyRange]).trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
                 
                 let valueRange = Range<String.Index>(uncheckedBounds: (line.index(after: colonRange.lowerBound), line.endIndex))
-                let value = line.substring(with: valueRange).trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
+                let value = String(line[valueRange]).trimmingCharacters(in: CharacterSet.whitespacesAndNewlines)
                 
                 switch key.lowercased() {
                 case "id":
