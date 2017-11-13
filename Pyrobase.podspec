@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name     = 'Pyrobase'
-  s.version  = '1.0.1'
+  s.version  = '1.1'
   s.summary  = 'An iOS lightweight wrapper for Firebase REST API'
   s.platform = :ios, '9.0'
   s.license  = { :type => 'MIT', :file => 'LICENSE' }
