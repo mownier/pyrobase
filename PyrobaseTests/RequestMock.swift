@@ -35,7 +35,7 @@ class RequestMock: RequestProtocol {
                 completion(.succeeded(expectedData.removeFirst()))
                 
             } else {
-                completion(.succeeded(content[path]))
+                completion(.succeeded(content[path]!))
             }
         }
     }
