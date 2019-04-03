@@ -15,15 +15,21 @@ public class PyroAuth {
     internal var refreshPath: String
     internal var confirmationCodePath: String
     
-    public class func create(key: String, bundleIdentifier: String = "com.ner.Pyrobase", plistName: String = "PyroAuthInfo", request: RequestProtocol = Request.create() ) -> PyroAuth? {
-        guard let bundle = Bundle(identifier: bundleIdentifier) else {
-            return nil
-        }
+    public class func create(key: String, request: RequestProtocol = Request.create() ) -> PyroAuth? {
+        guard let bundlePath = Bundle(for: PyroAuth.self).path(forResource: "Plist", ofType: "bundle") else { return nil }
+        guard let bundle = Bundle(path: bundlePath) else { return nil }
+        guard let reader = PlistReader.create(name: "PyroAuthInfo", bundle: bundle) else { return nil }
         
-        guard let reader = PlistReader.create(name: plistName, bundle: bundle) else {
-            return nil
-        }
-        
+        return PyroAuth.create(with: key, request: request, reader: reader)
+    }
+    
+    public class func create(key: String, bundleIdentifier: String, plistName: String = "PyroAuthInfo", request: RequestProtocol = Request.create() ) -> PyroAuth? {
+        guard let bundle = Bundle(identifier: bundleIdentifier) else { return nil }
+        guard let reader = PlistReader.create(name: plistName, bundle: bundle) else { return nil }
+        return PyroAuth.create(with: key, request: request, reader: reader)
+    }
+    
+    fileprivate class func create(with key: String, request: RequestProtocol, reader: PlistReader) -> PyroAuth {
         var registerPath: String = ""
         var signInPath: String = ""
         var refreshPath: String = ""
