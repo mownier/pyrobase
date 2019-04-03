@@ -43,7 +43,6 @@
 		B99651E71EB8573A0046810D /* RequestMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99651E61EB8573A0046810D /* RequestMock.swift */; };
 		B99651EC1EB858900046810D /* RequestTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99651EB1EB858900046810D /* RequestTest.swift */; };
 		B99651EE1EB85AF50046810D /* URLSessionMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B99651ED1EB85AF50046810D /* URLSessionMock.swift */; };
-		B999C9421EEA66B700385AEA /* PyroAuthInfo.plist in Resources */ = {isa = PBXBuildFile; fileRef = B999C9411EEA66B700385AEA /* PyroAuthInfo.plist */; };
 		B999C9441EEA690600385AEA /* PlistReader.swift in Sources */ = {isa = PBXBuildFile; fileRef = B999C9431EEA690600385AEA /* PlistReader.swift */; };
 		B999C9461EEA71A600385AEA /* PlistReaderTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B999C9451EEA71A600385AEA /* PlistReaderTest.swift */; };
 		B999C9481EEA723000385AEA /* PlistReaderResourceMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = B999C9471EEA723000385AEA /* PlistReaderResourceMock.swift */; };
@@ -113,7 +112,6 @@
 		B99651E61EB8573A0046810D /* RequestMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestMock.swift; sourceTree = "<group>"; };
 		B99651EB1EB858900046810D /* RequestTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestTest.swift; sourceTree = "<group>"; };
 		B99651ED1EB85AF50046810D /* URLSessionMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = URLSessionMock.swift; sourceTree = "<group>"; };
-		B999C9411EEA66B700385AEA /* PyroAuthInfo.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = PyroAuthInfo.plist; sourceTree = "<group>"; };
 		B999C9431EEA690600385AEA /* PlistReader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlistReader.swift; sourceTree = "<group>"; };
 		B999C9451EEA71A600385AEA /* PlistReaderTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlistReaderTest.swift; sourceTree = "<group>"; };
 		B999C9471EEA723000385AEA /* PlistReaderResourceMock.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PlistReaderResourceMock.swift; sourceTree = "<group>"; };
@@ -175,7 +173,6 @@
 			children = (
 				B90D2CD71EB7051500FC0ADD /* Pyrobase.h */,
 				B90D2CD81EB7051500FC0ADD /* Info.plist */,
-				B999C9411EEA66B700385AEA /* PyroAuthInfo.plist */,
 				B999C9431EEA690600385AEA /* PlistReader.swift */,
 				B939D1451EE53BB900CFDA98 /* PyroAuth.swift */,
 				B951C2F41EEBB2C8004DA16F /* PyroAuthResult.swift */,
@@ -317,9 +314,8 @@
 				TargetAttributes = {
 					B90D2CD31EB7051500FC0ADD = {
 						CreatedOnToolsVersion = 8.0;
-						DevelopmentTeam = 4WBRGV5Z9M;
 						LastSwiftMigration = 0900;
-						ProvisioningStyle = Automatic;
+						ProvisioningStyle = Manual;
 					};
 					B90D2CDC1EB7051500FC0ADD = {
 						CreatedOnToolsVersion = 8.0;
@@ -352,7 +348,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B999C9421EEA66B700385AEA /* PyroAuthInfo.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -562,8 +557,9 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Manual;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 4WBRGV5Z9M;
+				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -572,6 +568,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ner.Pyrobase;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
@@ -584,8 +581,9 @@
 			buildSettings = {
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Manual;
 				DEFINES_MODULE = YES;
-				DEVELOPMENT_TEAM = 4WBRGV5Z9M;
+				DEVELOPMENT_TEAM = "";
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -594,6 +592,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.ner.Pyrobase;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SKIP_INSTALL = YES;
 				SWIFT_SWIFT3_OBJC_INFERENCE = Default;
 				SWIFT_VERSION = 4.0;
